@@ -1,0 +1,129 @@
+import { Divider, Flex, Spinner, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+
+const Timer = () => {
+  const [time, setTime] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  const [isExpired, setIsExpired] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const calculateTimeLeft = () => {
+    const difference = Number(new Date("2024-01-17")) - Number(new Date());
+
+    if (difference > 0) {
+      setTime({
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      });
+      setIsLoading(false);
+    } else {
+      setIsExpired(true);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      calculateTimeLeft();
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
+
+  return (
+    <Flex
+      bg={"white"}
+      h={"75px"}
+      w={"100%"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      fontSize={"2xl"}
+      fontWeight={"bold"}
+    >
+      {isLoading && <Spinner size={"md"} color={"green.400"} />}
+      {isExpired && "Expired"}
+      {!isLoading && !isExpired && (
+        <Flex
+          w={"100%"}
+          h={"100%"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Flex
+            flexDir={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Text>{time.days.toString().padStart(2, "0")}</Text>
+            <Text
+              opacity={0.675}
+              fontSize={"xs"}
+              textTransform={"uppercase"}
+              mx={4}
+            >
+              Days
+            </Text>
+          </Flex>
+          <Divider orientation={"vertical"} mx={4} h={"50%"} />
+          <Flex
+            flexDir={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Text>{time.hours.toString().padStart(2, "0")}</Text>
+            <Text
+              opacity={0.675}
+              fontSize={"xs"}
+              textTransform={"uppercase"}
+              mx={4}
+            >
+              Hrs
+            </Text>
+          </Flex>
+          <Divider orientation={"vertical"} mx={4} h={"50%"} />
+
+          <Flex
+            flexDir={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Text>{time.minutes.toString().padStart(2, "0")}</Text>
+            <Text
+              opacity={0.675}
+              fontSize={"xs"}
+              textTransform={"uppercase"}
+              mx={4}
+            >
+              Mins
+            </Text>
+          </Flex>
+          <Divider orientation={"vertical"} mx={4} h={"50%"} />
+          <Flex
+            flexDir={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Text>{time.seconds.toString().padStart(2, "0")}</Text>
+            <Text
+              opacity={0.675}
+              fontSize={"xs"}
+              textTransform={"uppercase"}
+              mx={4}
+            >
+              Secs
+            </Text>
+          </Flex>
+        </Flex>
+      )}
+    </Flex>
+  );
+};
+
+export default Timer;

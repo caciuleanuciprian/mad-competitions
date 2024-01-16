@@ -5,3 +5,10 @@ export interface NavLinkProps {
   isActive?: boolean;
   onClick?: () => void;
 }
+
+export interface MobileNavLinkProps {
+  to: string;
+  label: string;
+  isActive?: boolean;
+  onClick?: () => void;
+}

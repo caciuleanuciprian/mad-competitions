@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
-import { Divider, Flex, Text } from "@chakra-ui/react";
-import { NavLinkProps } from "./types";
+import { Flex, Text } from "@chakra-ui/react";
+import { MobileNavLinkProps } from "../utils/types";
 
-const NavLink = ({
+const MobileNavLink = ({
   to,
   label,
-  hasBorderRight,
   isActive,
   onClick,
-}: NavLinkProps) => {
+}: MobileNavLinkProps) => {
   return (
     <Flex
       width={"100%"}
-      height={"10vh"}
+      height={"5vh"}
       justifyItems={"center"}
       alignItems={"center"}
     >
@@ -28,7 +27,7 @@ const NavLink = ({
         onClick={onClick}
       >
         <Text
-          fontSize={16}
+          fontSize={"md"}
           px={8}
           width={"100%"}
           height={"100%"}
@@ -41,10 +40,9 @@ const NavLink = ({
         >
           {label}
         </Text>
-        {hasBorderRight && <Divider orientation="vertical" h={"75%"} />}
       </Link>
     </Flex>
   );
 };
 
-export default NavLink;
+export default MobileNavLink;
