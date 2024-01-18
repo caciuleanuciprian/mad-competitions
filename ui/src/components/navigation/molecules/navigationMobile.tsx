@@ -8,12 +8,12 @@ const NavigationMobile = () => {
 
   return (
     <Flex
-      h={"10vh"}
-      w={"100vw"}
+      h={"8vh"}
+      w={"full"}
       alignItems={"center"}
       justifyContent={"space-between"}
       px={6}
-      bg={"gray.900"}
+      bg={"black"}
     >
       <Flex alignItems={"center"} gap={6}>
         <Logo />

@@ -3,3 +3,5 @@ export enum BannerColors {
   TOMORROW = "yellow.400",
   DEFAULT = "gray.400",
 }
+
+export const CARD_WIDTH = "475px";

@@ -5,7 +5,7 @@ const Page = ({ children }: any) => {
   return (
     <>
       <Navigation />
-      <Flex width={"100vw"} minH={"90vh"} flexDir={"column"} bg={"gray.800"}>
+      <Flex width={"100%"} minH={"90vh"} flexDir={"column"} bg={"black"}>
         {children}
       </Flex>
     </>

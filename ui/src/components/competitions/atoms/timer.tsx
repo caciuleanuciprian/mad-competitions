@@ -13,7 +13,7 @@ const Timer = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const calculateTimeLeft = () => {
-    const difference = Number(new Date("2024-01-17")) - Number(new Date());
+    const difference = Number(new Date("2024-01-19")) - Number(new Date());
 
     if (difference > 0) {
       setTime({

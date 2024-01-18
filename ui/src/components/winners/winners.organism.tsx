@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
-import CompetitionsCard from "./molecules/competitionsCard";
+import WinnersCard from "./molecules/winnersCard";
 
-const Competitions = () => {
+const Winners = () => {
   return (
     <Flex
       width={"100%"}
@@ -14,12 +14,13 @@ const Competitions = () => {
       my={8}
       flexWrap={"wrap"}
     >
-      <CompetitionsCard />
-      <CompetitionsCard />
-      <CompetitionsCard />
-      <CompetitionsCard />
+      <WinnersCard />
+      <WinnersCard />
+      <WinnersCard />
+      <WinnersCard />
+      <WinnersCard />
     </Flex>
   );
 };
 
-export default Competitions;
+export default Winners;

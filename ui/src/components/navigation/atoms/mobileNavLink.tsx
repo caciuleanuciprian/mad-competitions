@@ -11,7 +11,7 @@ const MobileNavLink = ({
   return (
     <Flex
       width={"100%"}
-      height={"5vh"}
+      height={"8vh"}
       justifyItems={"center"}
       alignItems={"center"}
     >

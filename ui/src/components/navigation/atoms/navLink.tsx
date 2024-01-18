@@ -12,7 +12,7 @@ const NavLink = ({
   return (
     <Flex
       width={"100%"}
-      height={"10vh"}
+      height={"8vh"}
       justifyItems={"center"}
       alignItems={"center"}
     >

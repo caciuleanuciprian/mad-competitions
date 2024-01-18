@@ -3,8 +3,8 @@ import Page from "../components/ui/page";
 import { useRecoilState } from "recoil";
 import { currentActivePageAtom } from "../components/navigation/utils/navigation.recoil";
 import { LinkIDS } from "../components/navigation/utils/consts";
-import Header from "../components/ui/header";
 import Competitions from "../components/competitions/competitions.organism";
+import Footer from "../components/footer/footer.organism";
 
 const LandingPage = () => {
   const [, setIsActive] = useRecoilState(currentActivePageAtom);
@@ -15,8 +15,8 @@ const LandingPage = () => {
 
   return (
     <Page>
-      <Header />
       <Competitions />
+      <Footer />
     </Page>
   );
 };
