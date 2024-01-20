@@ -13,8 +13,8 @@ const TagDisplay = ({ tags }: TagDisplayProps) => {
       alignItems={"center"}
       gap={2}
     >
-      {tags.map((tag) => (
-        <Tag bg={"green.300"} color={"white"}>
+      {tags.map((tag, index) => (
+        <Tag key={`${tag}-${index}`} bg={"green.300"} color={"white"}>
           {tag}
         </Tag>
       ))}

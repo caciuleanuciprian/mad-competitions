@@ -1,6 +1,9 @@
-import { Flex, Text, Image } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import logo from "../../../assets/logo.svg";
+import { Flex, Text } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
+import Logo from "../../ui/logo";
+import { useRecoilState } from "recoil";
+import { Links, LinkIDS } from "../../navigation/utils/consts";
+import { currentActivePageAtom } from "../../navigation/utils/navigation.recoil";
 
 interface FooterLinksProps {
   isMobile: boolean;
@@ -8,6 +11,8 @@ interface FooterLinksProps {
 }
 
 const FooterLinks = ({ isMobile, isTablet }: FooterLinksProps) => {
+  const navigate = useNavigate();
+  const [, setIsActive] = useRecoilState(currentActivePageAtom);
   return (
     <Flex
       justifyContent={"space-between"}
@@ -27,15 +32,20 @@ const FooterLinks = ({ isMobile, isTablet }: FooterLinksProps) => {
         <Text>Privacy Policy</Text>
         <Text>Cookie Policy</Text>
         <Text>FAQs</Text>
-        <Text>Contact Us</Text>
+        <Link to={"/contact"}>Contact Us</Link>
       </Flex>
-      <Image
+      <Flex
+        width={28}
+        height={28}
+        cursor={"pointer"}
         order={isMobile || isTablet ? 1 : 2}
-        w={28}
-        h={28}
-        src={logo}
-        alt="logo"
-      />
+        onClick={() => {
+          navigate(Links[LinkIDS.HOME].to);
+          setIsActive(LinkIDS.HOME);
+        }}
+      >
+        <Logo />
+      </Flex>
     </Flex>
   );
 };

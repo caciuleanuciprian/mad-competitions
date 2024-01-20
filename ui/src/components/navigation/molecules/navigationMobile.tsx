@@ -1,10 +1,16 @@
 import { Flex, IconButton, Icon, useDisclosure } from "@chakra-ui/react";
 import { Menu, ShoppingCart } from "lucide-react";
-import Logo from "../../ui/logo";
 import MobileNav from "./mobileNav";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { currentActivePageAtom } from "../utils/navigation.recoil";
+import Logo from "../../ui/logo";
+import { LinkIDS, Links } from "../utils/consts";
 
 const NavigationMobile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+  const [, setIsActive] = useRecoilState(currentActivePageAtom);
 
   return (
     <Flex
@@ -14,9 +20,20 @@ const NavigationMobile = () => {
       justifyContent={"space-between"}
       px={6}
       bg={"black"}
+      minH={"80px"}
     >
       <Flex alignItems={"center"} gap={6}>
-        <Logo />
+        <Flex
+          w={24}
+          h={24}
+          cursor={"pointer"}
+          onClick={() => {
+            navigate(Links[LinkIDS.HOME].to);
+            setIsActive(LinkIDS.HOME);
+          }}
+        >
+          <Logo />
+        </Flex>
       </Flex>
 
       <MobileNav isOpen={isOpen} onClose={onClose} />

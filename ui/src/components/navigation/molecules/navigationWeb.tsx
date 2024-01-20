@@ -2,13 +2,15 @@ import { Flex, Icon, IconButton } from "@chakra-ui/react";
 import NavLink from "../atoms/navLink";
 import { NavLinkProps } from "../utils/types";
 import { ShoppingCart } from "lucide-react";
-import Logo from "../../ui/logo";
 import { useRecoilState } from "recoil";
 import { currentActivePageAtom } from "../utils/navigation.recoil";
-import { Links } from "../utils/consts";
+import { LinkIDS, Links } from "../utils/consts";
+import { useNavigate } from "react-router-dom";
+import Logo from "../../ui/logo";
 
 const NavigationWeb = () => {
   const [isActive, setIsActive] = useRecoilState(currentActivePageAtom);
+  const navigate = useNavigate();
 
   return (
     <Flex
@@ -18,9 +20,20 @@ const NavigationWeb = () => {
       justifyContent={"space-between"}
       px={6}
       bg={"black"}
+      minH={"80px"}
     >
       <Flex alignItems={"center"} gap={6}>
-        <Logo />
+        <Flex
+          w={24}
+          h={24}
+          cursor={"pointer"}
+          onClick={() => {
+            navigate(Links[LinkIDS.HOME].to);
+            setIsActive(LinkIDS.HOME);
+          }}
+        >
+          <Logo />
+        </Flex>
         <Flex>
           {Links.map((link: NavLinkProps, index: number) => (
             <NavLink

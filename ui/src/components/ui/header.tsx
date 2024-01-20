@@ -1,5 +1,5 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
-import logo from "../../assets/logo.svg";
+import { Flex, Text } from "@chakra-ui/react";
+import Logo from "./logo";
 
 interface HeaderProps {
   title: string;
@@ -13,13 +13,14 @@ const Header = ({ title }: HeaderProps) => {
       background={"gray.900"}
       justifyContent={"center"}
       alignItems={"center"}
+      minH={"80px"}
     >
       <Flex w={"100%"} height={"100%"}></Flex>
       <Text w={"100%"} textAlign={"center"} fontSize={"4xl"} color={"white"}>
         {title}
       </Text>
       <Flex w={"100%"} height={"100%"} justifyContent={"flex-end"}>
-        <Image src={logo} alt="logo" />
+        <Logo />
       </Flex>
     </Flex>
   );

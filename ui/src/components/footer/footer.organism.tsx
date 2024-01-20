@@ -10,9 +10,21 @@ const Footer = () => {
   const [isTablet] = useMediaQuery("(max-width: 1200px)", { ssr: false });
 
   return (
-    <Flex w={"100%"} bg={"gray.700"} flexDir={"column"} color={"white"}>
+    <Flex
+      w={"100%"}
+      bg={"gray.700"}
+      flexDir={"column"}
+      color={"white"}
+      minH={"25vh"}
+    >
       <Bar />
-      <Flex flexDir={"column"} maxW={"1200px"} margin={"0 auto"} w={"100%"}>
+      <Flex
+        flexDir={"column"}
+        maxW={"1200px"}
+        margin={"0 auto"}
+        w={"100%"}
+        h={"100%"}
+      >
         <Flex
           justifyContent={"space-between"}
           alignItems={"center"}

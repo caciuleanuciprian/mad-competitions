@@ -15,7 +15,12 @@ const Copyright = ({ isMobile, isTablet }: CopyrightProps) => {
       alignItems={"center"}
       flexDir={isMobile || isTablet ? "column" : "row"}
     >
-      <Text fontSize={"xs"} wordBreak={"break-all"}>
+      <Text
+        fontSize={"xs"}
+        wordBreak={"break-all"}
+        px={isMobile || isTablet ? 6 : 0}
+        textAlign={"center"}
+      >
         Copyright © 2024{" "}
         <Link to={Links[LinkIDS.HOME].to}>MAD Competitions</Link> | Companies
         House Number: 123456789
