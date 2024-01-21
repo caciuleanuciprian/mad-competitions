@@ -7,5 +7,5 @@ export const currentActivePageAtom = atom({
 
 export const isAdminAtom = atom({
   key: "isAdmin",
-  default: true,
+  default: false,
 });

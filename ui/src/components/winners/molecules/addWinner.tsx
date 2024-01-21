@@ -34,6 +34,10 @@ const AddWinner = () => {
       gap={4}
       fontSize={"4xl"}
       onClick={onOpen}
+      _hover={{
+        cursor: "pointer",
+        color: "green.400",
+      }}
     >
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

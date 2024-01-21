@@ -26,6 +26,7 @@ const Competitions = () => {
       <CompetitionsCard />
       <CompetitionsCard />
       <CompetitionsCard />
+      <CompetitionsCard />
     </Flex>
   );
 };
