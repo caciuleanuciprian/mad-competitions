@@ -11,12 +11,15 @@ import ContactPage from "./routes/contact";
 import ErrorPage from "./routes/error-page";
 import LandingPage from "./routes/landing";
 import WinnersPage from "./routes/winners";
+import LoginPage from "./routes/login";
 
 const PagesURL = {
   LANDING: "/",
   COMPETITIONS: "/competitions",
   WINNERS: "/winners",
   CONTACT: "/contact",
+  DASHBOARD: "/dashboard",
+  LOGIN: "/login",
 };
 
 const router = createBrowserRouter([
@@ -38,6 +41,11 @@ const router = createBrowserRouter([
   {
     path: PagesURL.CONTACT,
     element: <ContactPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PagesURL.LOGIN,
+    element: <LoginPage />,
     errorElement: <ErrorPage />,
   },
 ]);

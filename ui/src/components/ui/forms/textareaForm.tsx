@@ -1,4 +1,4 @@
-import { FormLabel, Textarea } from "@chakra-ui/react";
+import { Flex, FormLabel, Textarea } from "@chakra-ui/react";
 import { useField, FieldProps } from "@formiz/core";
 import { Text } from "@chakra-ui/react";
 
@@ -19,7 +19,7 @@ export const TextareaForm = <FormattedValue = string,>(
   const { value, setValue, isValid, errorMessage } = useField(props);
   const { name } = props;
   return (
-    <>
+    <Flex flexDir="column">
       <FormLabel fontSize={"sm"} color={"white"} textTransform={"capitalize"}>
         {name}
       </FormLabel>
@@ -39,6 +39,6 @@ export const TextareaForm = <FormattedValue = string,>(
           {errorMessage}
         </Text>
       )}
-    </>
+    </Flex>
   );
 };

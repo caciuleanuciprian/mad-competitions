@@ -8,7 +8,7 @@ import winner from "../../../assets/winner.jpg";
 const WinnersCard = () => {
   return (
     <Flex
-      bg={"gray.800"}
+      bg={"gray.900"}
       h={"625px"}
       flexDir={"column"}
       borderRadius={"md"}

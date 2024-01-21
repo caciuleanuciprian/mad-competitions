@@ -1,8 +1,10 @@
 import {
+  Flex,
   FormLabel,
   Input,
-  InputLeftElement,
-  InputRightElement,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
 } from "@chakra-ui/react";
 import { useField, FieldProps } from "@formiz/core";
 import { Text } from "@chakra-ui/react";
@@ -10,11 +12,10 @@ import { Text } from "@chakra-ui/react";
 type MyFieldProps<FormattedValue> = FieldProps<string, FormattedValue>;
 
 interface InputFieldProps {
-  hasLeftEl?: boolean;
   leftEl?: any;
-  hasRightEl?: boolean;
   rightEl?: any;
   type?: string;
+  label?: string;
   name: string;
 }
 
@@ -22,36 +23,42 @@ export const InputField = <FormattedValue = string,>(
   props: MyFieldProps<FormattedValue> | InputFieldProps | any
 ) => {
   const { value, setValue, isValid, errorMessage } = useField(props);
-  const { hasLeftEl, hasRightEl, leftEl, rightEl, name, type } = props;
+  const { leftEl, rightEl, name, type, label } = props;
   return (
-    <>
-      {hasLeftEl && (
-        <InputLeftElement pointerEvents={"none"} color={"green.400"}>
-          {leftEl}
-        </InputLeftElement>
-      )}
+    <Flex flexDir={"column"}>
       <FormLabel fontSize={"sm"} color={"white"} textTransform={"capitalize"}>
-        {name}
+        {label ? label : name}
       </FormLabel>
-      <Input
-        color={"white"}
-        bg={"gray.900"}
-        name={name}
-        type={type}
-        value={value ?? ""}
-        onChange={(e) => setValue(e.target.value)}
-        borderColor={isValid ? "" : "red.500"}
-      />
-      {!isValid && (
-        <Text fontSize={"xs"} color={"red.500"}>
-          {errorMessage}
-        </Text>
-      )}
-      {hasRightEl && (
-        <InputRightElement pointerEvents={"none"} color={"green.400"}>
-          {rightEl}
-        </InputRightElement>
-      )}
-    </>
+      <InputGroup>
+        {leftEl && (
+          <InputLeftAddon
+            pointerEvents={"none"}
+            color={"green.400"}
+            bg={"transparent"}
+          >
+            {leftEl}
+          </InputLeftAddon>
+        )}
+        <Input
+          color={"white"}
+          bg={"gray.900"}
+          name={name}
+          type={type}
+          value={value ?? ""}
+          onChange={(e) => setValue(e.target.value)}
+          borderColor={isValid ? "" : "red.500"}
+        />
+        {!isValid && (
+          <Text fontSize={"xs"} color={"red.500"}>
+            {errorMessage}
+          </Text>
+        )}
+        {rightEl && (
+          <InputRightAddon pointerEvents={"none"} color={"green.400"}>
+            {rightEl}
+          </InputRightAddon>
+        )}
+      </InputGroup>
+    </Flex>
   );
 };

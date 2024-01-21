@@ -3,6 +3,10 @@ import { isEmail, isNotEmptyString, isRequired } from "@formiz/validations";
 import { InputField } from "../../ui/forms/inputField";
 import { TextareaForm } from "../../ui/forms/textareaForm";
 import { Button, ButtonGroup, Flex } from "@chakra-ui/react";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ContactFormProps {
   order: number;
@@ -39,6 +43,8 @@ const ContactForm = ({ order }: ContactFormProps) => {
             <Flex flexDir={"column"} w={"100%"}>
               <InputField
                 name="name"
+                type="text"
+                leftEl={<FontAwesomeIcon icon={faUser} />}
                 validations={[
                   {
                     handler: isRequired() && isNotEmptyString(),
@@ -50,6 +56,8 @@ const ContactForm = ({ order }: ContactFormProps) => {
             <Flex flexDir={"column"} w={"100%"}>
               <InputField
                 name="email"
+                type="email"
+                leftEl={<FontAwesomeIcon icon={faEnvelope} />}
                 validations={[
                   {
                     handler: isRequired() && isEmail(),
@@ -61,6 +69,8 @@ const ContactForm = ({ order }: ContactFormProps) => {
             <Flex flexDir={"column"} w={"100%"}>
               <InputField
                 name="address"
+                type="text"
+                leftEl={<FontAwesomeIcon icon={faLocationDot} />}
                 validations={[
                   {
                     handler: isRequired() && isNotEmptyString(),
@@ -81,10 +91,16 @@ const ContactForm = ({ order }: ContactFormProps) => {
               />
             </Flex>
             <ButtonGroup>
-              <Button variant={"outline"} color={"white"}>
+              <Button
+                variant={"outline"}
+                color={"white"}
+                _hover={{ color: "black", bg: "white", borderColor: "white" }}
+              >
                 Submit
               </Button>
-              <Button>Reset</Button>
+              <Button variant={"solid"} _hover={{ borderColor: "white" }}>
+                Clear
+              </Button>
             </ButtonGroup>
           </Flex>
         }
