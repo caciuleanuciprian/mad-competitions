@@ -5,10 +5,9 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
-  ButtonGroup,
-  Button,
 } from "@chakra-ui/react";
+import { useRecoilState } from "recoil";
+import { shouldSubmitAtom } from "../../winners/utils/winners.recoil";
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -30,25 +29,6 @@ export const FormModal = ({
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>{form}</ModalBody>
-
-        <ModalFooter>
-          <ButtonGroup>
-            <Button
-              variant={"outline"}
-              color={"white"}
-              _hover={{ color: "black", bg: "white", borderColor: "white" }}
-            >
-              Create
-            </Button>
-            <Button
-              variant={"solid"}
-              _hover={{ borderColor: "white" }}
-              onClick={onClose}
-            >
-              Cancel
-            </Button>
-          </ButtonGroup>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );

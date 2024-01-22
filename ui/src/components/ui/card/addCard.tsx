@@ -1,4 +1,4 @@
-import { Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FormModal } from "../forms/formModal";
@@ -7,10 +7,12 @@ import { Card } from "./card";
 interface AddCardProps {
   form: React.ReactNode;
   title: string;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
 }
 
-const AddCard = ({ form, title }: AddCardProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const AddCard = ({ form, title, isOpen, onOpen, onClose }: AddCardProps) => {
   return (
     <Card bg={"gray.900"} onClick={onOpen} centered>
       <FormModal

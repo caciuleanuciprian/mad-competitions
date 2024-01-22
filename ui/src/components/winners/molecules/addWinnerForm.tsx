@@ -1,9 +1,40 @@
-import { Flex, FormLabel } from "@chakra-ui/react";
+import { Button, ButtonGroup, Flex, FormLabel } from "@chakra-ui/react";
 import { Formiz, useForm } from "@formiz/core";
 import { InputField } from "../../ui/forms/inputField";
+import { useRecoilState } from "recoil";
+import { fileToUploadAtom } from "../utils/winners.recoil";
+import { FileUpload } from "../../ui/forms/fileUpload";
+import axios from "axios";
 
-const AddWinnerForm = () => {
-  const addWinnerForm = useForm();
+interface AddWinnerFormProps {
+  onClose: () => void;
+}
+
+const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
+  const addWinnerForm = useForm({
+    onSubmit: async (values) => {
+      console.log(values);
+      await handleSubmit(values);
+    },
+  });
+
+  const [fileToUpload] = useRecoilState(fileToUploadAtom);
+
+  const handleSubmit = async (values: any) => {
+    console.log({
+      name: values.name,
+      competition: values.competition,
+      ticketNumber: values.ticketNumber,
+      picture: fileToUpload,
+    });
+    await axios.post("/api/winners", {
+      name: values.name,
+      competition: values.competition,
+      ticketNumber: values.ticketNumber,
+      picture: fileToUpload,
+    });
+  };
+
   return (
     <Flex flexDir={"column"} gap={4}>
       <Formiz connect={addWinnerForm}>
@@ -20,9 +51,26 @@ const AddWinnerForm = () => {
           >
             Winner Picture
           </FormLabel>
-          <input name="winnerPicture" type="file" />
+          <FileUpload />
         </Flex>
       </Formiz>
+      <ButtonGroup py={4} justifyContent={"flex-end"}>
+        <Button
+          variant={"outline"}
+          color={"white"}
+          _hover={{ color: "black", bg: "white", borderColor: "white" }}
+          onClick={() => addWinnerForm.submit()}
+        >
+          Create
+        </Button>
+        <Button
+          variant={"solid"}
+          _hover={{ borderColor: "white" }}
+          onClick={onClose}
+        >
+          Cancel
+        </Button>
+      </ButtonGroup>
     </Flex>
   );
 };
