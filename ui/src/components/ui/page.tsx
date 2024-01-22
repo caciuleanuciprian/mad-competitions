@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import Navigation from "../navigation/navigation.organism";
+import { Navigation } from "../navigation/navigation.organism";
 
 const Page = ({ children }: any) => {
   return (

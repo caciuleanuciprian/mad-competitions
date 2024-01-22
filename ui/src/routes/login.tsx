@@ -4,27 +4,22 @@ import { InputField } from "../components/ui/forms/inputField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
+import Page from "../components/ui/page";
 
 const LoginPage = () => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
   const loginForm = useForm();
   return (
-    <Flex
-      w={"100vw"}
-      justifyContent={"center"}
-      alignItems={"flex-start"}
-      h={"100vh"}
-      bg={"black"}
-      color={"white"}
-      pt={4}
-    >
+    <Page>
       <Flex
         flexDir={"column"}
         p={8}
         gap={4}
         bg={"gray.900"}
         borderRadius={"md"}
-        minW={isMobile ? "75%" : "50%"}
+        w={isMobile ? "90%" : "50%"}
+        margin={"0 auto"}
+        color={"white"}
       >
         <Text fontSize={"2xl"} textAlign={"center"}>
           Login
@@ -43,7 +38,7 @@ const LoginPage = () => {
         </Formiz>
         <Button>Login</Button>
       </Flex>
-    </Flex>
+    </Page>
   );
 };
 

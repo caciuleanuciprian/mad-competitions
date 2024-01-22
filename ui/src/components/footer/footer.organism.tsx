@@ -5,6 +5,8 @@ import Payment from "./atoms/payment";
 import FooterLinks from "./atoms/links";
 import Copyright from "./atoms/copyright";
 
+// TODO Separate footer into sections/smaller components
+
 const Footer = () => {
   const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
   const [isTablet] = useMediaQuery("(max-width: 1200px)", { ssr: false });

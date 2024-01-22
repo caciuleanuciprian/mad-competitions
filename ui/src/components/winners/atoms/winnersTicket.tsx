@@ -6,7 +6,7 @@ interface WinnersTicketProps {
 
 const WinnersTicket = ({ ticket }: WinnersTicketProps) => {
   return (
-    <Text fontSize={"sm"} px={4} py={2}>
+    <Text fontSize={"sm"} px={4} py={4} color={"white"}>
       Ticket Number{" "}
       <Text as={"span"} fontWeight={"semibold"} color={"green.400"}>
         #{ticket}

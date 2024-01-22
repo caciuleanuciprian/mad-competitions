@@ -5,24 +5,13 @@ import Banner from "../atoms/banner";
 import ProgressBar from "../atoms/progress";
 import Price from "../atoms/price";
 import { ChevronRight } from "lucide-react";
-import { CARD_WIDTH } from "../utils/consts";
 import Alternative from "../atoms/alternative";
 import TagDisplay from "../atoms/tag";
+import { Card } from "../../ui/card/card";
 
 const CompetitionsCard = () => {
   return (
-    <Flex
-      bg={"white"}
-      h={"750px"}
-      flexDir={"column"}
-      borderRadius={"md"}
-      boxShadow={"5px 5px 15px 0px rgba(0,0,0,0.5)"}
-      transition={"all 0.2s ease-in-out"}
-      w={`${CARD_WIDTH}`}
-      _hover={{
-        cursor: "pointer",
-      }}
-    >
+    <Card bg={"white"}>
       <Image
         borderTopRadius={"md"}
         src={giveaway}
@@ -66,7 +55,7 @@ const CompetitionsCard = () => {
       >
         {"Enter Now"} <ChevronRight />
       </Button>
-    </Flex>
+    </Card>
   );
 };
 

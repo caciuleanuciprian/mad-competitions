@@ -1,34 +1,22 @@
-import { Flex, useMediaQuery } from "@chakra-ui/react";
 import WinnersCard from "./molecules/winnersCard";
 import { useRecoilState } from "recoil";
 import { isAdminAtom } from "../navigation/utils/navigation.recoil";
-import AddWinner from "./molecules/addWinner";
+import { CardContainer } from "../ui/card/cardContainer";
+import AddWinnerForm from "./molecules/addWinnerForm";
+import AddCard from "../ui/card/addCard";
 
 const Winners = () => {
   const [isAdmin] = useRecoilState(isAdminAtom);
-  const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
 
   return (
-    <Flex
-      width={"100%"}
-      maxWidth={"1500px"}
-      margin={"0 auto"}
-      h={"100%"}
-      minH={"53.65vh"}
-      justifyContent={"center"}
-      alignItems={"center"}
-      gap={8}
-      my={8}
-      flexWrap={"wrap"}
-      px={isMobile ? 4 : 0}
-    >
-      {isAdmin && <AddWinner />}
+    <CardContainer>
+      {isAdmin && <AddCard form={<AddWinnerForm />} title={"Add Winner"} />}
       <WinnersCard />
       <WinnersCard />
       <WinnersCard />
       <WinnersCard />
       <WinnersCard />
-    </Flex>
+    </CardContainer>
   );
 };
 

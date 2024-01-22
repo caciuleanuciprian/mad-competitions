@@ -6,7 +6,7 @@ interface WinnersNameProps {
 
 const WinnersName = ({ name }: WinnersNameProps) => {
   return (
-    <Text fontSize={"xl"} px={4} py={2}>
+    <Text fontSize={"xl"} px={4} py={2} color={"white"}>
       {name}
     </Text>
   );

@@ -8,7 +8,7 @@ import { Links } from "../utils/consts";
 import { NavLinkProps } from "../utils/types";
 import { useRecoilState } from "recoil";
 import { currentActivePageAtom } from "../utils/navigation.recoil";
-import MobileNavLink from "../atoms/mobileNavLink";
+import NavLink from "../atoms/navLink";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -30,7 +30,7 @@ const MobileNav = ({ isOpen, onClose }: MobileNavProps) => {
           _hover={{ borderColor: "green.400" }}
         />
         {Links.map((link: NavLinkProps, index: number) => (
-          <MobileNavLink
+          <NavLink
             to={link.to}
             label={link.label}
             key={`${link.label}-${index}`}

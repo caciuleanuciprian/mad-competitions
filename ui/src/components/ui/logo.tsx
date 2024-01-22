@@ -5,10 +5,21 @@ interface LogoWithoutLinkProps {
   order?: number;
   width?: number;
   height?: number;
+  onClick?: () => void;
 }
 
-const Logo = ({ order, width, height }: LogoWithoutLinkProps) => {
-  return <Image order={order} w={width} h={height} src={logo} alt="logo" />;
+const Logo = ({ order, width, height, onClick }: LogoWithoutLinkProps) => {
+  return (
+    <Image
+      onClick={onClick ? onClick : () => {}}
+      cursor={onClick ? "pointer" : "default"}
+      order={order}
+      w={width}
+      h={height}
+      src={logo}
+      alt="logo"
+    />
+  );
 };
 
 export default Logo;

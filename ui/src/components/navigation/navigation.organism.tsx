@@ -1,11 +1,61 @@
-import { useMediaQuery } from "@chakra-ui/react";
-import NavigationMobile from "./molecules/navigationMobile";
-import NavigationWeb from "./molecules/navigationWeb";
+import { Flex, useDisclosure, useMediaQuery } from "@chakra-ui/react";
+import NavLink from "./atoms/navLink";
+import { NavLinkProps } from "./utils/types";
+import { Menu, ShoppingCart } from "lucide-react";
+import { useRecoilState } from "recoil";
+import { currentActivePageAtom } from "./utils/navigation.recoil";
+import { LinkIDS, Links } from "./utils/consts";
+import { useNavigate } from "react-router-dom";
+import Logo from "../ui/logo";
+import { NavContainer } from "./atoms/navContainer";
+import { NavIcon } from "./atoms/navIcon";
+import MobileNav from "./molecules/mobileNav";
 
-const Navigation = () => {
+export const Navigation = () => {
+  const [isActive, setIsActive] = useRecoilState(currentActivePageAtom);
+  const navigate = useNavigate();
   const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  return <>{isMobile ? <NavigationMobile /> : <NavigationWeb />}</>;
+  return (
+    <NavContainer>
+      <Flex alignItems={"center"} gap={6}>
+        <Logo
+          width={24}
+          height={24}
+          onClick={() => {
+            navigate(Links[LinkIDS.HOME].to);
+            setIsActive(LinkIDS.HOME);
+          }}
+        />
+        {!isMobile && (
+          <Flex>
+            {Links.map((link: NavLinkProps, index: number) => (
+              <NavLink
+                to={link.to}
+                label={link.label}
+                hasBorderRight={index < Links.length - 1}
+                key={`${link.label}-${index}`}
+                onClick={() => setIsActive(index)}
+                isActive={isActive === index}
+              />
+            ))}
+          </Flex>
+        )}
+      </Flex>
+
+      {isMobile && <MobileNav isOpen={isOpen} onClose={onClose} />}
+
+      <Flex justifyContent={"flex-end"} gap={4}>
+        {isMobile && (
+          <NavIcon ariaLabel={"Open Menu"} onClick={onOpen} icon={Menu} />
+        )}
+        <NavIcon
+          ariaLabel={"Open Cart"}
+          onClick={() => {}}
+          icon={ShoppingCart}
+        />
+      </Flex>
+    </NavContainer>
+  );
 };
-
-export default Navigation;
