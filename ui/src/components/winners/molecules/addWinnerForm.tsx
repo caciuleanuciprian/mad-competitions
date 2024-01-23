@@ -18,7 +18,7 @@ const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
     },
   });
 
-  const [fileToUpload] = useRecoilState(fileToUploadAtom);
+  const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
 
   const handleSubmit = async (values: any) => {
     console.log({
@@ -33,6 +33,7 @@ const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
       ticketNumber: values.ticketNumber,
       picture: fileToUpload,
     });
+    setFileToUpload(null);
   };
 
   return (

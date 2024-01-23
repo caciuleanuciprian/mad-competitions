@@ -1,53 +1,31 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
-import { shouldSubmitAtom } from "../../winners/utils/winners.recoil";
+import { filesToUploadAtom } from "../../competitions/utils/competitions.recoil";
+import { Divider, Flex, ListItem, OrderedList, Text } from "@chakra-ui/react";
 
 export const MultipleFilesUpload = () => {
-  const [fileList, setFileList] = useState<FileList | null>(null);
-  const [shouldSubmit] = useRecoilState(shouldSubmitAtom);
+  const [filesToUpload, setFilesToUpload] = useRecoilState<FileList | any>(
+    filesToUploadAtom
+  );
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFileList(e.target.files);
+    //@ts-ignore
+    setFilesToUpload([...e.target.files]);
   };
-
-  const handleUploadClick = () => {
-    if (!fileList) {
-      return;
-    }
-
-    const data = new FormData();
-    files.forEach((file, i) => {
-      data.append(`file-${i}`, file, file.name);
-    });
-
-    fetch("https://httpbin.org/post", {
-      method: "POST",
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err));
-  };
-
-  const files = fileList ? [...fileList] : [];
-
-  useEffect(() => {
-    if (shouldSubmit) {
-      handleUploadClick();
-    }
-  }, [shouldSubmit]);
 
   return (
-    <div>
+    <Flex flexDir={"column"}>
       <input type="file" onChange={handleFileChange} multiple />
-
-      <ul>
-        {files.map((file, i) => (
-          <li key={i}>
-            {file.name} - {file.type}
-          </li>
+      <OrderedList>
+        {filesToUpload?.map((file: File, i: number) => (
+          <ListItem pt={2} key={i} fontSize={"xs"}>
+            <Text>
+              {file.name} - {file.type}{" "}
+            </Text>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </OrderedList>
+      <Divider mt={2} />
+    </Flex>
   );
 };

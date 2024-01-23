@@ -1,12 +1,78 @@
-import { Checkbox, Flex, FormLabel, Stack } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  Checkbox,
+  Flex,
+  FormLabel,
+  Stack,
+} from "@chakra-ui/react";
 import { Formiz, useForm } from "@formiz/core";
 import { InputField } from "../../ui/forms/inputField";
 import { TextareaForm } from "../../ui/forms/textareaForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilState } from "recoil";
+import { filesToUploadAtom } from "../utils/competitions.recoil";
+import axios from "axios";
+import { MultipleFilesUpload } from "../../ui/forms/multipleFilesUpload";
+import { FileUpload } from "../../ui/forms/fileUpload";
+import { fileToUploadAtom } from "../../winners/utils/winners.recoil";
+import { useEffect } from "react";
 
-const AddCompetitionForm = () => {
-  const addCompetitionForm = useForm();
+interface AddCompetitionFormProps {
+  onClose: () => void;
+}
+
+const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
+  const addCompetitionForm = useForm({
+    onSubmit: async (values) => {
+      console.log(values);
+      await handleSubmit(values);
+      resetForm();
+    },
+  });
+
+  const [filesToUpload, setFilesToUpload] = useRecoilState(filesToUploadAtom);
+  const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
+
+  const handleSubmit = async (values: any) => {
+    console.log({
+      title: values.title,
+      description: values.description,
+      maxTickets: values.maxTickets,
+      ticketPrice: values.ticketPrice,
+      startDate: values.startDate,
+      endDate: values.endDate,
+      imageShowcase: fileToUpload,
+      imagesCarousel: filesToUpload,
+      alternativePrize: values.alternativePrize,
+      tags: values.tags,
+    });
+    await axios.post("/api/competitions", {
+      title: values.title,
+      description: values.description,
+      maxTickets: values.maxTickets,
+      ticketPrice: values.ticketPrice,
+      startDate: values.startDate,
+      endDate: values.endDate,
+      imageShowcase: fileToUpload,
+      imagesCarousel: filesToUpload,
+      alternativePrize: values.alternativePrize,
+      tags: values.tags,
+    });
+  };
+
+  const resetForm = () => {
+    addCompetitionForm.reset();
+    setFilesToUpload(null);
+    setFileToUpload(null);
+  };
+
+  useEffect(() => {
+    setFilesToUpload(null);
+    setFileToUpload(null);
+  }, []);
+
   return (
     <Flex flexDir={"column"} gap={4}>
       <Formiz connect={addCompetitionForm}>
@@ -43,7 +109,7 @@ const AddCompetitionForm = () => {
           >
             Image Showcase
           </FormLabel>
-          <input name="imageShowcase" type="file" />
+          <FileUpload />
         </Flex>
 
         <Flex flexDir={"column"}>
@@ -54,7 +120,7 @@ const AddCompetitionForm = () => {
           >
             Images Carousel
           </FormLabel>
-          <input type="file" name="imagesCarousel" multiple />
+          <MultipleFilesUpload />
         </Flex>
 
         <InputField
@@ -77,6 +143,23 @@ const AddCompetitionForm = () => {
             <Checkbox>Cash</Checkbox>
             <Checkbox>Other</Checkbox>
           </Stack>
+          <ButtonGroup py={4} justifyContent={"flex-end"}>
+            <Button
+              variant={"outline"}
+              color={"white"}
+              _hover={{ color: "black", bg: "white", borderColor: "white" }}
+              onClick={() => addCompetitionForm.submit()}
+            >
+              Create
+            </Button>
+            <Button
+              variant={"solid"}
+              _hover={{ borderColor: "white" }}
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+          </ButtonGroup>
         </Flex>
       </Formiz>
     </Flex>

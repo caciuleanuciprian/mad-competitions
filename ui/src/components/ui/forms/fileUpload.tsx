@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
 import { fileToUploadAtom } from "../../winners/utils/winners.recoil";
+import { Divider, Flex, Text } from "@chakra-ui/react";
 
 export const FileUpload = () => {
   const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
@@ -11,31 +12,17 @@ export const FileUpload = () => {
     }
   };
 
-  //   const handleUploadClick = () => {
-  //     if (!file) {
-  //       return;
-  //     }
-
-  //     fetch("https://httpbin.org/post", {
-  //       method: "POST",
-  //       body: file,
-
-  //       headers: {
-  //         "content-type": file.type,
-  //         "content-length": `${file.size}`,
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => console.log(data))
-  //       .catch((err) => console.error(err));
-  //   };
-
   return (
-    <div>
+    <Flex flexDir={"column"}>
       <input type="file" onChange={handleFileChange} />
-      <div>
-        {fileToUpload && `${fileToUpload?.name} - ${fileToUpload?.type}`}
-      </div>
-    </div>
+      <Flex flexDir={"column"}>
+        {fileToUpload && (
+          <Text pt={2} fontSize={"xs"}>
+            {fileToUpload?.name} - {fileToUpload?.type}
+          </Text>
+        )}
+        <Divider mt={2} />
+      </Flex>
+    </Flex>
   );
 };
