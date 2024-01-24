@@ -1,8 +1,9 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { FormModal } from "../forms/formModal";
-import { Card } from "./card";
+import FormModal from "../forms/formModal";
+import Card from "./card";
+import { ICONS_SIZE } from "../../../lib/consts";
 
 interface AddCardProps {
   form: React.ReactNode;
@@ -30,7 +31,7 @@ const AddCard = ({ form, title, isOpen, onOpen, onClose }: AddCardProps) => {
         gap={4}
       >
         <Text>{title}</Text>
-        <FontAwesomeIcon icon={faCirclePlus} />
+        <FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCirclePlus} />
       </Flex>
     </Card>
   );

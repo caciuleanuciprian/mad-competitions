@@ -1,6 +1,6 @@
 import { Flex, useMediaQuery } from "@chakra-ui/react";
 
-export const CardContainer = ({ children }: any) => {
+const CardContainer = ({ children }: any) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
 
   return (
@@ -21,3 +21,5 @@ export const CardContainer = ({ children }: any) => {
     </Flex>
   );
 };
+
+export default CardContainer;

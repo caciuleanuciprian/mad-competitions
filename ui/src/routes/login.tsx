@@ -1,10 +1,11 @@
 import { Button, Flex, Text, useMediaQuery } from "@chakra-ui/react";
 import { Formiz, useForm } from "@formiz/core";
-import { InputField } from "../components/ui/forms/inputField";
+import InputField from "../components/ui/forms/inputField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import Page from "../components/ui/page";
+import { ICONS_SIZE } from "../lib/consts";
 
 const LoginPage = () => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
@@ -28,12 +29,12 @@ const LoginPage = () => {
           <InputField
             name="username"
             type="text"
-            leftEl={<FontAwesomeIcon icon={faUser} />}
+            leftEl={<FontAwesomeIcon fontSize={ICONS_SIZE} icon={faUser} />}
           />
           <InputField
             name="password"
             type="password"
-            leftEl={<FontAwesomeIcon icon={faLock} />}
+            leftEl={<FontAwesomeIcon fontSize={ICONS_SIZE} icon={faLock} />}
           />
         </Formiz>
         <Button>Login</Button>

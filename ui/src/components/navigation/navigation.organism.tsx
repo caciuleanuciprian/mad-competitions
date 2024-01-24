@@ -1,17 +1,18 @@
 import { Flex, useDisclosure, useMediaQuery } from "@chakra-ui/react";
 import NavLink from "./atoms/navLink";
 import { NavLinkProps } from "./utils/types";
-import { Menu, ShoppingCart } from "lucide-react";
 import { useRecoilState } from "recoil";
 import { currentActivePageAtom } from "./utils/navigation.recoil";
 import { LinkIDS, Links } from "./utils/consts";
 import { useNavigate } from "react-router-dom";
 import Logo from "../ui/logo";
-import { NavContainer } from "./atoms/navContainer";
-import { NavIcon } from "./atoms/navIcon";
+import NavContainer from "./atoms/navContainer";
+import NavIcon from "./atoms/navIcon";
 import MobileNav from "./molecules/mobileNav";
+import Cart from "../cart/cart.organism";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-export const Navigation = () => {
+const Navigation = () => {
   const [isActive, setIsActive] = useRecoilState(currentActivePageAtom);
   const navigate = useNavigate();
   const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
@@ -27,6 +28,7 @@ export const Navigation = () => {
             navigate(Links[LinkIDS.HOME].to);
             setIsActive(LinkIDS.HOME);
           }}
+          marginRight={4}
         />
         {!isMobile && (
           <Flex>
@@ -48,14 +50,12 @@ export const Navigation = () => {
 
       <Flex justifyContent={"flex-end"} gap={4}>
         {isMobile && (
-          <NavIcon ariaLabel={"Open Menu"} onClick={onOpen} icon={Menu} />
+          <NavIcon ariaLabel={"Open Menu"} onClick={onOpen} icon={faBars} />
         )}
-        <NavIcon
-          ariaLabel={"Open Cart"}
-          onClick={() => {}}
-          icon={ShoppingCart}
-        />
+        <Cart />
       </Flex>
     </NavContainer>
   );
 };
+
+export default Navigation;

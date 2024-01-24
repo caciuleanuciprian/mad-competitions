@@ -30,7 +30,6 @@ const FooterLinks = ({ isMobile, isTablet }: FooterLinksProps) => {
       >
         <Link to={"/tos"}>Terms & Conditions</Link>
         <Text>Privacy Policy</Text>
-        <Text>Cookie Policy</Text>
         <Text>FAQs</Text>
         <Link to={"/contact"}>Contact Us</Link>
       </Flex>

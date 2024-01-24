@@ -8,7 +8,7 @@ interface CardProps {
   centered?: boolean;
 }
 
-export const Card = ({ children, bg, onClick, centered }: CardProps) => {
+const Card = ({ children, bg, onClick, centered }: CardProps) => {
   return (
     <Flex
       bg={bg}
@@ -28,3 +28,5 @@ export const Card = ({ children, bg, onClick, centered }: CardProps) => {
     </Flex>
   );
 };
+
+export default Card;

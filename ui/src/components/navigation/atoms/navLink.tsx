@@ -29,7 +29,6 @@ const NavLink = ({
       >
         <Text
           fontSize={"md"}
-          px={8}
           width={"100%"}
           height={"100%"}
           display={"flex"}
@@ -41,8 +40,8 @@ const NavLink = ({
         >
           {label}
         </Text>
-        {hasBorderRight && <Divider orientation="vertical" h={"75%"} />}
       </Link>
+      {hasBorderRight && <Divider orientation="vertical" mx={8} h={"75%"} />}
     </Flex>
   );
 };

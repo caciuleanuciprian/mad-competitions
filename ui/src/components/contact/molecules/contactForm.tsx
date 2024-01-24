@@ -1,12 +1,13 @@
 import { Formiz, useForm } from "@formiz/core";
 import { isEmail, isNotEmptyString, isRequired } from "@formiz/validations";
-import { InputField } from "../../ui/forms/inputField";
-import { TextareaForm } from "../../ui/forms/textareaForm";
+import InputField from "../../ui/forms/inputField";
+import TextareaForm from "../../ui/forms/textareaForm";
 import { Button, ButtonGroup, Flex } from "@chakra-ui/react";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ICONS_SIZE_SMALL } from "../../../lib/consts";
 
 interface ContactFormProps {
   order: number;
@@ -44,7 +45,9 @@ const ContactForm = ({ order }: ContactFormProps) => {
               <InputField
                 name="name"
                 type="text"
-                leftEl={<FontAwesomeIcon icon={faUser} />}
+                leftEl={
+                  <FontAwesomeIcon fontSize={ICONS_SIZE_SMALL} icon={faUser} />
+                }
                 validations={[
                   {
                     handler: isRequired() && isNotEmptyString(),
@@ -57,7 +60,12 @@ const ContactForm = ({ order }: ContactFormProps) => {
               <InputField
                 name="email"
                 type="email"
-                leftEl={<FontAwesomeIcon icon={faEnvelope} />}
+                leftEl={
+                  <FontAwesomeIcon
+                    fontSize={ICONS_SIZE_SMALL}
+                    icon={faEnvelope}
+                  />
+                }
                 validations={[
                   {
                     handler: isRequired() && isEmail(),
@@ -70,7 +78,12 @@ const ContactForm = ({ order }: ContactFormProps) => {
               <InputField
                 name="address"
                 type="text"
-                leftEl={<FontAwesomeIcon icon={faLocationDot} />}
+                leftEl={
+                  <FontAwesomeIcon
+                    fontSize={ICONS_SIZE_SMALL}
+                    icon={faLocationDot}
+                  />
+                }
                 validations={[
                   {
                     handler: isRequired() && isNotEmptyString(),

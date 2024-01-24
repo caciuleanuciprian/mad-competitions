@@ -7,17 +7,18 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { Formiz, useForm } from "@formiz/core";
-import { InputField } from "../../ui/forms/inputField";
-import { TextareaForm } from "../../ui/forms/textareaForm";
+import InputField from "../../ui/forms/inputField";
+import TextareaForm from "../../ui/forms/textareaForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { filesToUploadAtom } from "../utils/competitions.recoil";
 import axios from "axios";
-import { MultipleFilesUpload } from "../../ui/forms/multipleFilesUpload";
-import { FileUpload } from "../../ui/forms/fileUpload";
+import MultipleFilesUpload from "../../ui/forms/multipleFilesUpload";
+import FileUpload from "../../ui/forms/fileUpload";
 import { fileToUploadAtom } from "../../winners/utils/winners.recoil";
 import { useEffect } from "react";
+import { ICONS_SIZE } from "../../../lib/consts";
 
 interface AddCompetitionFormProps {
   onClose: () => void;
@@ -92,13 +93,13 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
           name="startDate"
           type="datetime-local"
           label="Start Date"
-          rightEl={<FontAwesomeIcon icon={faCalendar} />}
+          rightEl={<FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCalendar} />}
         />
         <InputField
           name="endDate"
           type="datetime-local"
           label="End Date"
-          rightEl={<FontAwesomeIcon icon={faCalendar} />}
+          rightEl={<FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCalendar} />}
         />
 
         <Flex flexDir={"column"}>

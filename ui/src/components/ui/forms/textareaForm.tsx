@@ -13,7 +13,7 @@ interface InputFieldProps {
   name: string;
 }
 
-export const TextareaForm = <FormattedValue = string,>(
+const TextareaForm = <FormattedValue = string,>(
   props: MyFieldProps<FormattedValue> | InputFieldProps | any
 ) => {
   const { value, setValue, isValid, errorMessage } = useField(props);
@@ -42,3 +42,5 @@ export const TextareaForm = <FormattedValue = string,>(
     </Flex>
   );
 };
+
+export default TextareaForm;

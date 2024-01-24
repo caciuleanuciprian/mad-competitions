@@ -5,4 +5,5 @@ export const PagesURL = {
   CONTACT: "/contact",
   DASHBOARD: "/dashboard",
   LOGIN: "/login",
+  COMPETITION_DETAILS: "/competitions/:id",
 };

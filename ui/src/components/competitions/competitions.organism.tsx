@@ -1,7 +1,7 @@
 import CompetitionsCard from "./molecules/competitionsCard";
 import { useRecoilState } from "recoil";
 import { isAdminAtom } from "../navigation/utils/navigation.recoil";
-import { CardContainer } from "../ui/card/cardContainer";
+import CardContainer from "../ui/card/cardContainer";
 import AddCard from "../ui/card/addCard";
 import AddCompetitionForm from "./molecules/addCompetitionForm";
 import { useDisclosure } from "@chakra-ui/react";

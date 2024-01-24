@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { fileToUploadAtom } from "../../winners/utils/winners.recoil";
 import { Divider, Flex, Text } from "@chakra-ui/react";
 
-export const FileUpload = () => {
+const FileUpload = () => {
   const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,3 +26,5 @@ export const FileUpload = () => {
     </Flex>
   );
 };
+
+export default FileUpload;

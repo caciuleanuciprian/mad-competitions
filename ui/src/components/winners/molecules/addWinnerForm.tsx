@@ -1,9 +1,9 @@
 import { Button, ButtonGroup, Flex, FormLabel } from "@chakra-ui/react";
 import { Formiz, useForm } from "@formiz/core";
-import { InputField } from "../../ui/forms/inputField";
+import InputField from "../../ui/forms/inputField";
 import { useRecoilState } from "recoil";
 import { fileToUploadAtom } from "../utils/winners.recoil";
-import { FileUpload } from "../../ui/forms/fileUpload";
+import FileUpload from "../../ui/forms/fileUpload";
 import axios from "axios";
 
 interface AddWinnerFormProps {

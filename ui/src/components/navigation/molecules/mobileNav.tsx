@@ -1,7 +1,9 @@
 import {
   Drawer,
+  DrawerBody,
   DrawerCloseButton,
   DrawerContent,
+  DrawerHeader,
   DrawerOverlay,
 } from "@chakra-ui/react";
 import { Links } from "../utils/consts";
@@ -19,25 +21,36 @@ const MobileNav = ({ isOpen, onClose }: MobileNavProps) => {
   const [isActive, setIsActive] = useRecoilState(currentActivePageAtom);
 
   return (
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+    <Drawer
+      blockScrollOnMount={false}
+      isOpen={isOpen}
+      placement="right"
+      onClose={onClose}
+    >
       <DrawerOverlay />
-      <DrawerContent background={"gray.900"} borderColor={"green.400"} pt={8}>
+      <DrawerContent
+        color={"white"}
+        background={"gray.900"}
+        borderColor={"green.400"}
+      >
         <DrawerCloseButton
           background={"black"}
-          color={"white"}
           colorScheme="blackAlpha"
-          p={4}
           _hover={{ borderColor: "green.400" }}
         />
-        {Links.map((link: NavLinkProps, index: number) => (
-          <NavLink
-            to={link.to}
-            label={link.label}
-            key={`${link.label}-${index}`}
-            onClick={() => setIsActive(index)}
-            isActive={isActive === index}
-          />
-        ))}
+        <DrawerHeader>Navigation</DrawerHeader>
+
+        <DrawerBody>
+          {Links.map((link: NavLinkProps, index: number) => (
+            <NavLink
+              to={link.to}
+              label={link.label}
+              key={`${link.label}-${index}`}
+              onClick={() => setIsActive(index)}
+              isActive={isActive === index}
+            />
+          ))}
+        </DrawerBody>
       </DrawerContent>
     </Drawer>
   );

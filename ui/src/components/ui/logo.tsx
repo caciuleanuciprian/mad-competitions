@@ -6,9 +6,16 @@ interface LogoWithoutLinkProps {
   width?: number;
   height?: number;
   onClick?: () => void;
+  marginRight?: number;
 }
 
-const Logo = ({ order, width, height, onClick }: LogoWithoutLinkProps) => {
+const Logo = ({
+  order,
+  width,
+  height,
+  onClick,
+  marginRight,
+}: LogoWithoutLinkProps) => {
   return (
     <Image
       onClick={onClick ? onClick : () => {}}
@@ -18,6 +25,7 @@ const Logo = ({ order, width, height, onClick }: LogoWithoutLinkProps) => {
       h={height}
       src={logo}
       alt="logo"
+      mr={marginRight ? marginRight : ""}
     />
   );
 };

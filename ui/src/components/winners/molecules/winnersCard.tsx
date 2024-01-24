@@ -3,7 +3,7 @@ import WinnersName from "../atoms/winnersName";
 import WinnersPrize from "../atoms/winnersPrize";
 import WinnersTicket from "../atoms/winnersTicket";
 import winner from "../../../assets/winner.jpg";
-import { Card } from "../../ui/card/card";
+import Card from "../../ui/card/card";
 
 const WinnersCard = () => {
   return (

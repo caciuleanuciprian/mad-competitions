@@ -6,6 +6,7 @@ import LandingPage from "./landing";
 import LoginPage from "./login";
 import WinnersPage from "./winners";
 import { PagesURL } from "./consts";
+import CompetitionDetails from "./competitionDetails";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,11 @@ export const router = createBrowserRouter([
   {
     path: PagesURL.COMPETITIONS,
     element: <CompetitionsPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PagesURL.COMPETITION_DETAILS,
+    element: <CompetitionDetails />,
     errorElement: <ErrorPage />,
   },
   {

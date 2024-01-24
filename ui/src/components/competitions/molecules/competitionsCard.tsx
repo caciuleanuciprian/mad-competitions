@@ -4,10 +4,12 @@ import Timer from "../atoms/timer";
 import Banner from "../atoms/banner";
 import ProgressBar from "../atoms/progress";
 import Price from "../atoms/price";
-import { ChevronRight } from "lucide-react";
 import Alternative from "../atoms/alternative";
 import TagDisplay from "../atoms/tag";
-import { Card } from "../../ui/card/card";
+import Card from "../../ui/card/card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { ICONS_SIZE_SMALL } from "../../../lib/consts";
 
 const CompetitionsCard = () => {
   return (
@@ -53,7 +55,10 @@ const CompetitionsCard = () => {
           border: "2px solid white",
         }}
       >
-        {"Enter Now"} <ChevronRight />
+        <Text fontSize={"lg"}>
+          Enter Now{" "}
+          <FontAwesomeIcon fontSize={ICONS_SIZE_SMALL} icon={faChevronRight} />
+        </Text>
       </Button>
     </Card>
   );

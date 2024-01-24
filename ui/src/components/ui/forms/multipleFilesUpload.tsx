@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { filesToUploadAtom } from "../../competitions/utils/competitions.recoil";
 import { Divider, Flex, ListItem, OrderedList, Text } from "@chakra-ui/react";
 
-export const MultipleFilesUpload = () => {
+const MultipleFilesUpload = () => {
   const [filesToUpload, setFilesToUpload] = useRecoilState<FileList | any>(
     filesToUploadAtom
   );
@@ -29,3 +29,5 @@ export const MultipleFilesUpload = () => {
     </Flex>
   );
 };
+
+export default MultipleFilesUpload;

@@ -1,4 +1,6 @@
-import { IconButton, Icon } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ICONS_SIZE } from "../../../lib/consts";
 
 interface NavIconProps {
   ariaLabel: string;
@@ -6,7 +8,7 @@ interface NavIconProps {
   icon: any;
 }
 
-export const NavIcon = ({ ariaLabel, onClick, icon }: NavIconProps) => {
+const NavIcon = ({ ariaLabel, onClick, icon }: NavIconProps) => {
   return (
     <IconButton
       aria-label={ariaLabel}
@@ -17,8 +19,12 @@ export const NavIcon = ({ ariaLabel, onClick, icon }: NavIconProps) => {
       h={16}
       _hover={{ borderColor: "green.400" }}
       onClick={onClick}
+      justifyItems={"center"}
+      alignItems={"center"}
     >
-      <Icon color={"white"} w={6} h={6} as={icon} />
+      <FontAwesomeIcon color={"white"} fontSize={ICONS_SIZE} icon={icon} />
     </IconButton>
   );
 };
+
+export default NavIcon;

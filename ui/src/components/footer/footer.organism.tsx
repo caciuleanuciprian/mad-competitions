@@ -22,7 +22,7 @@ const Footer = () => {
       <Bar />
       <Flex
         flexDir={"column"}
-        maxW={"1200px"}
+        maxW={"1500px"}
         margin={"0 auto"}
         w={"100%"}
         h={"100%"}

@@ -19,7 +19,7 @@ interface InputFieldProps {
   name: string;
 }
 
-export const InputField = <FormattedValue = string,>(
+const InputField = <FormattedValue = string,>(
   props: MyFieldProps<FormattedValue> | InputFieldProps | any
 ) => {
   const { value, setValue, isValid, errorMessage } = useField(props);
@@ -62,3 +62,5 @@ export const InputField = <FormattedValue = string,>(
     </Flex>
   );
 };
+
+export default InputField;

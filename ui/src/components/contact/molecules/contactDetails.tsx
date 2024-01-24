@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ICONS_SIZE } from "../../../lib/consts";
 
 interface ContactDetailsProps {
   order: number;
@@ -31,21 +32,29 @@ const ContactDetails = ({ order }: ContactDetailsProps) => {
       borderTopLeftRadius={isMobile ? "md" : "none"}
     >
       <a href={"mailto:test@gmail.com"} target={"_blank"}>
-        <Flex gap={2}>
-          <FontAwesomeIcon fontSize={28} icon={faEnvelope} cursor={"pointer"} />
+        <Flex gap={2} alignItems={"center"}>
+          <FontAwesomeIcon
+            fontSize={ICONS_SIZE}
+            icon={faEnvelope}
+            cursor={"pointer"}
+          />
           <Text fontSize={"xl"}>{"/mad.competitions"}</Text>
         </Flex>
       </a>
       <a href={"https://www.facebook.com/"} target={"_blank"}>
-        <Flex gap={2}>
-          <FontAwesomeIcon fontSize={28} icon={faFacebook} cursor={"pointer"} />
+        <Flex gap={2} alignItems={"center"}>
+          <FontAwesomeIcon
+            fontSize={ICONS_SIZE}
+            icon={faFacebook}
+            cursor={"pointer"}
+          />
           <Text fontSize={"xl"}>{"/mad.competitions"}</Text>
         </Flex>
       </a>
       <a href={"https://www.instagram.com/"} target={"_blank"}>
-        <Flex gap={2}>
+        <Flex gap={2} alignItems={"center"}>
           <FontAwesomeIcon
-            fontSize={28}
+            fontSize={ICONS_SIZE}
             icon={faInstagram}
             cursor={"pointer"}
           />
@@ -53,8 +62,12 @@ const ContactDetails = ({ order }: ContactDetailsProps) => {
         </Flex>
       </a>
       <a href={"https://www.twitter.com/"} target={"_blank"}>
-        <Flex gap={2}>
-          <FontAwesomeIcon fontSize={28} icon={faTwitter} cursor={"pointer"} />
+        <Flex gap={2} alignItems={"center"}>
+          <FontAwesomeIcon
+            fontSize={ICONS_SIZE}
+            icon={faTwitter}
+            cursor={"pointer"}
+          />
 
           <Text fontSize={"xl"}>{"/mad.competitions"}</Text>
         </Flex>

@@ -6,8 +6,6 @@ import {
   ModalCloseButton,
   ModalBody,
 } from "@chakra-ui/react";
-import { useRecoilState } from "recoil";
-import { shouldSubmitAtom } from "../../winners/utils/winners.recoil";
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -16,12 +14,7 @@ interface ModalComponentProps {
   title: string;
 }
 
-export const FormModal = ({
-  isOpen,
-  onClose,
-  form,
-  title,
-}: ModalComponentProps) => {
+const FormModal = ({ isOpen, onClose, form, title }: ModalComponentProps) => {
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -33,3 +26,5 @@ export const FormModal = ({
     </Modal>
   );
 };
+
+export default FormModal;
