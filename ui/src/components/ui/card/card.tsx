@@ -6,9 +6,10 @@ interface CardProps {
   bg?: string;
   onClick?: () => void;
   centered?: boolean;
+  id?: string;
 }
 
-const Card = ({ children, bg, onClick, centered }: CardProps) => {
+const Card = ({ children, bg, onClick, centered, id }: CardProps) => {
   return (
     <Flex
       bg={bg}
@@ -23,6 +24,7 @@ const Card = ({ children, bg, onClick, centered }: CardProps) => {
       }}
       justifyContent={centered ? "center" : "space-between"}
       onClick={onClick ? onClick : () => {}}
+      id={id}
     >
       {children}
     </Flex>

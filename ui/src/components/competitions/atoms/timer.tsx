@@ -1,7 +1,12 @@
 import { Divider, Flex, Spinner, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-const Timer = () => {
+interface TimerProps {
+  background?: string;
+  color?: string;
+}
+
+const Timer = ({ background = "white", color = "gray.900" }: TimerProps) => {
   const [time, setTime] = useState({
     days: 0,
     hours: 0,
@@ -13,7 +18,7 @@ const Timer = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const calculateTimeLeft = () => {
-    const difference = Number(new Date("2024-01-22")) - Number(new Date());
+    const difference = Number(new Date("2024-01-29")) - Number(new Date());
 
     if (difference > 0) {
       setTime({
@@ -22,11 +27,10 @@ const Timer = () => {
         minutes: Math.floor((difference / 1000 / 60) % 60),
         seconds: Math.floor((difference / 1000) % 60),
       });
-      setIsLoading(false);
     } else {
       setIsExpired(true);
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -39,8 +43,8 @@ const Timer = () => {
 
   return (
     <Flex
-      bg={"white"}
-      h={"75px"}
+      bg={background}
+      h={"100px"}
       w={"100%"}
       justifyContent={"center"}
       alignItems={"center"}
@@ -55,6 +59,7 @@ const Timer = () => {
           h={"100%"}
           justifyContent={"center"}
           alignItems={"center"}
+          color={color}
         >
           <Flex
             flexDir={"column"}

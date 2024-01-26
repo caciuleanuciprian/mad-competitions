@@ -119,6 +119,8 @@ const Cart = () => {
               gap={8}
               overflowY={cartItems.length > 0 ? "scroll" : "hidden"}
               width={"100%"}
+              boxShadow={"inset 0px -5px 10px -5px rgba(0,0,0,0.5);"}
+              pb={4}
             >
               {cartItems.length > 0 ? (
                 cartItems.map((item: CartItemProps) => (

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 //@ts-ignore
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Options } from "@splidejs/splide";
-import { Flex, Image } from "@chakra-ui/react";
+import { Flex, Image, useMediaQuery } from "@chakra-ui/react";
 
 interface ProductCarouselProps {
   images: File[];
@@ -11,6 +11,9 @@ interface ProductCarouselProps {
 const ProductCarousel = ({ images }: ProductCarouselProps) => {
   const mainRef = useRef(null);
   const thumbsRef = useRef(null);
+
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
+  const [isTablet] = useMediaQuery("(max-width: 1200px)");
 
   useEffect(() => {
     //@ts-ignore
@@ -21,7 +24,7 @@ const ProductCarousel = ({ images }: ProductCarouselProps) => {
   }, []);
 
   const renderSlides = () => {
-    return images.map((slide: any, index: number) => (
+    return images?.map((slide: any, index: number) => (
       <SplideSlide key={slide.name}>
         <Image
           src={URL.createObjectURL(slide as Blob)}
@@ -32,34 +35,35 @@ const ProductCarousel = ({ images }: ProductCarouselProps) => {
     ));
   };
 
-  const thumbWidth = window.innerWidth / images.length;
+  const thumbWidth = (isMobile ? 768 : 1500) / images?.length;
 
   const mainOptions: Options = {
     type: "loop",
     perPage: 1,
     perMove: 1,
     pagination: false,
-    height: "50rem",
+    height: isMobile ? "25rem" : isTablet ? "35rem" : "25rem",
     cover: true,
     arrows: true,
   };
 
   const thumbsOptions: Options = {
     type: "slide",
-    perPage: 5,
+    perPage: 3,
     rewind: true,
     pagination: false,
-    fixedWidth: thumbWidth,
-    fixedHeight: 70,
+    fixedWidth: !isMobile && !isTablet ? thumbWidth / 2 : thumbWidth,
+    fixedHeight: !isMobile && !isTablet ? thumbWidth / 2 : thumbWidth,
     cover: true,
     focus: "center",
     isNavigation: true,
     arrows: false,
+    gap: isMobile ? 15 : 25,
   };
 
   return (
-    <Flex gap={4} overflow={"hidden"}>
-      <Flex flexDir={"column"} w={"50%"}>
+    <Flex gap={4} overflow={"hidden"} w={isTablet || isMobile ? "100%" : "50%"}>
+      <Flex flexDir={"column"} w={"100%"} gap={2}>
         <Splide
           options={mainOptions}
           ref={mainRef}

@@ -3,11 +3,18 @@ import { Flex, Progress, Text } from "@chakra-ui/react";
 interface ProgressBarProps {
   ticketsBought: number;
   totalTickets: number;
+  height?: string;
+  px?: number;
 }
 
-const ProgressBar = ({ ticketsBought, totalTickets }: ProgressBarProps) => {
+const ProgressBar = ({
+  ticketsBought,
+  totalTickets,
+  height = "5%",
+  px = 3,
+}: ProgressBarProps) => {
   return (
-    <Flex w={"100%"} h={"5%"} px={3}>
+    <Flex w={"100%"} h={height} px={px}>
       <Progress
         w={"100%"}
         h={"100%"}

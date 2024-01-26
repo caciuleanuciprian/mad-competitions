@@ -69,7 +69,21 @@ const CartItem = ({ title, amount, price, img, id }: CartItemProps) => {
       >
         <Flex justifyContent={"space-between"}>
           <Text>{title}</Text>
-          <Text>{price * itemAmount}$</Text>
+          <IconButton
+            outline={"none"}
+            _hover={{ borderColor: "transparent" }}
+            onClick={handleRemoveItemFromArray}
+            justifyItems={"center"}
+            alignItems={"center"}
+            aria-label={"Remove Item"}
+            variant={"ghost"}
+          >
+            <FontAwesomeIcon
+              color={"white"}
+              fontSize={ICONS_SIZE_SMALL}
+              icon={faTrash}
+            />
+          </IconButton>
         </Flex>
         <Flex alignItems={"center"} justifyContent={"space-between"}>
           <Flex alignItems={"center"}>
@@ -90,22 +104,7 @@ const CartItem = ({ title, amount, price, img, id }: CartItemProps) => {
             </Flex>
             <Text>x {price}$</Text>
           </Flex>
-
-          <IconButton
-            outline={"none"}
-            _hover={{ borderColor: "transparent" }}
-            onClick={handleRemoveItemFromArray}
-            justifyItems={"center"}
-            alignItems={"center"}
-            aria-label={"Remove Item"}
-            variant={"ghost"}
-          >
-            <FontAwesomeIcon
-              color={"white"}
-              fontSize={ICONS_SIZE_SMALL}
-              icon={faTrash}
-            />
-          </IconButton>
+          <Text>{price * itemAmount}$</Text>
         </Flex>
       </Flex>
     </Flex>

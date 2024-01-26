@@ -11,9 +11,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { ICONS_SIZE_SMALL } from "../../../lib/consts";
 
-const CompetitionsCard = () => {
+interface CompetitionsCardProps {
+  id?: string;
+  onClick?: () => void;
+}
+
+const CompetitionsCard = ({ id, onClick }: CompetitionsCardProps) => {
   return (
-    <Card bg={"white"}>
+    <Card bg={"white"} id={id} onClick={onClick}>
       <Image
         borderTopRadius={"md"}
         src={giveaway}

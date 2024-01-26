@@ -2,6 +2,7 @@ import {
   Button,
   ButtonGroup,
   Checkbox,
+  CheckboxGroup,
   Flex,
   FormLabel,
   Stack,
@@ -17,11 +18,18 @@ import axios from "axios";
 import MultipleFilesUpload from "../../ui/forms/multipleFilesUpload";
 import FileUpload from "../../ui/forms/fileUpload";
 import { fileToUploadAtom } from "../../winners/utils/winners.recoil";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ICONS_SIZE } from "../../../lib/consts";
 
 interface AddCompetitionFormProps {
   onClose: () => void;
+}
+
+enum Tags {
+  CAR = "Car",
+  TECH = "Tech",
+  CASH = "Cash",
+  OTHER = "Other",
 }
 
 const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
@@ -36,6 +44,10 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
   const [filesToUpload, setFilesToUpload] = useRecoilState(filesToUploadAtom);
   const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
 
+  const [checkedItems, setCheckedItems] = useState(["", "", "", ""]);
+
+  console.log(checkedItems);
+
   const handleSubmit = async (values: any) => {
     console.log({
       title: values.title,
@@ -47,7 +59,7 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
       imageShowcase: fileToUpload,
       imagesCarousel: filesToUpload,
       alternativePrize: values.alternativePrize,
-      tags: values.tags,
+      tags: checkedItems.filter((item) => item !== ""),
     });
     await axios.post("/api/competitions", {
       title: values.title,
@@ -59,7 +71,7 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
       imageShowcase: fileToUpload,
       imagesCarousel: filesToUpload,
       alternativePrize: values.alternativePrize,
-      tags: values.tags,
+      tags: checkedItems.filter((item) => item !== ""),
     });
   };
 
@@ -138,12 +150,95 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
           >
             Tags
           </FormLabel>
-          <Stack direction="row" spacing={4}>
-            <Checkbox>Car</Checkbox>
-            <Checkbox>Tech</Checkbox>
-            <Checkbox>Cash</Checkbox>
-            <Checkbox>Other</Checkbox>
-          </Stack>
+          {/* Should be redesigned */}
+          <CheckboxGroup colorScheme="green">
+            <Stack direction="row" spacing={4}>
+              <Checkbox
+                isChecked={checkedItems[0] !== ""}
+                value={Tags.CAR}
+                onChange={(e) =>
+                  e.target.checked
+                    ? setCheckedItems([
+                        e.target.value,
+                        checkedItems[1],
+                        checkedItems[2],
+                        checkedItems[3],
+                      ])
+                    : setCheckedItems([
+                        "",
+                        checkedItems[1],
+                        checkedItems[2],
+                        checkedItems[3],
+                      ])
+                }
+              >
+                Car
+              </Checkbox>
+              <Checkbox
+                isChecked={checkedItems[1] !== ""}
+                value={Tags.TECH}
+                onChange={(e) =>
+                  e.target.checked
+                    ? setCheckedItems([
+                        checkedItems[0],
+                        e.target.value,
+                        checkedItems[2],
+                        checkedItems[3],
+                      ])
+                    : setCheckedItems([
+                        checkedItems[0],
+                        "",
+                        checkedItems[2],
+                        checkedItems[3],
+                      ])
+                }
+              >
+                Tech
+              </Checkbox>
+              <Checkbox
+                isChecked={checkedItems[2] !== ""}
+                value={Tags.CASH}
+                onChange={(e) =>
+                  e.target.checked
+                    ? setCheckedItems([
+                        checkedItems[0],
+                        checkedItems[1],
+                        e.target.value,
+                        checkedItems[3],
+                      ])
+                    : setCheckedItems([
+                        checkedItems[0],
+                        checkedItems[1],
+                        "",
+                        checkedItems[3],
+                      ])
+                }
+              >
+                Cash
+              </Checkbox>
+              <Checkbox
+                isChecked={checkedItems[3] !== ""}
+                value={Tags.OTHER}
+                onChange={(e) =>
+                  e.target.checked
+                    ? setCheckedItems([
+                        checkedItems[0],
+                        checkedItems[1],
+                        checkedItems[2],
+                        e.target.value,
+                      ])
+                    : setCheckedItems([
+                        checkedItems[0],
+                        checkedItems[1],
+                        checkedItems[2],
+                        "",
+                      ])
+                }
+              >
+                Other
+              </Checkbox>
+            </Stack>
+          </CheckboxGroup>
           <ButtonGroup py={4} justifyContent={"flex-end"}>
             <Button
               variant={"outline"}

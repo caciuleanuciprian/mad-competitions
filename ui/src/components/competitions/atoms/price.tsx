@@ -2,9 +2,10 @@ import { Flex, Text } from "@chakra-ui/react";
 
 interface PriceProps {
   price: number;
+  color?: string;
 }
 
-const Price = ({ price }: PriceProps) => {
+const Price = ({ price, color }: PriceProps) => {
   return (
     <Flex
       w={"75%"}
@@ -20,7 +21,7 @@ const Price = ({ price }: PriceProps) => {
       >
         {`$${price}`}
       </Text>
-      <Text fontSize={"sm"} display={"inline"} ml={1}>
+      <Text color={color} fontSize={"sm"} display={"inline"} ml={1}>
         Per Entry
       </Text>
     </Flex>
