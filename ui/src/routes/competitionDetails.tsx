@@ -7,7 +7,6 @@ import Header from "../components/ui/header";
 import Footer from "../components/footer/footer.organism";
 import "@splidejs/react-splide/css";
 import ProductCarousel from "../components/ui/carousel";
-import { useAxios } from "../lib/axios/useAxios";
 import {
   Button,
   Divider,
@@ -30,6 +29,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS_SIZE_SMALL } from "../lib/consts";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import QuestionRadio from "../components/ui/radioCard";
+import useAxios from "../lib/axios/useAxios";
+import { useParams } from "react-router-dom";
+import { GetCompetitionById } from "../components/competitions/core/competitions.service";
 
 const CompetitionDetails = () => {
   const [, setIsActive] = useRecoilState(currentActivePageAtom);
@@ -43,27 +45,21 @@ const CompetitionDetails = () => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
   const [isTablet] = useMediaQuery("(max-width: 1200px)");
 
-  const params = {
-    method: "GET",
-    url: "/posts",
-    headers: { accept: "*/*" },
-    data: {
-      userId: 1,
-      id: 19392,
-      title: "title",
-      body: "Sample text",
-    },
-  };
-
-  const { response, loading, error } = useAxios(params);
-
   useEffect(() => {
     setIsActive(LinkIDS.COMPETITIONS);
   }, []);
 
+  const { id } = useParams();
+
+  const { data, isLoading, error } = useAxios({
+    fetchFn: GetCompetitionById,
+    paramsOfFetch: { id: id },
+    loadOnMount: true,
+  });
+
   return (
     <Page>
-      {loading && <Spinner />}
+      {isLoading && <Spinner />}
       {error && <div>Error: {`${error}`}</div>}
       <Header title={title} />
       <Flex

@@ -7,6 +7,8 @@ import AddCompetitionForm from "./molecules/addCompetitionForm";
 import { useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { PagesURL } from "../../routes/consts";
+import { GetCompetitions } from "./core/competitions.service";
+import useAxios from "../../lib/axios/useAxios";
 
 const Competitions = () => {
   const [isAdmin] = useRecoilState(isAdminAtom);
@@ -20,6 +22,14 @@ const Competitions = () => {
     { id: "4" },
     { id: "5" },
   ];
+
+  const { data, isLoading, error } = useAxios({
+    fetchFn: GetCompetitions,
+    paramsOfFetch: {},
+    loadOnMount: true,
+  });
+
+  console.log(data);
 
   return (
     <CardContainer>

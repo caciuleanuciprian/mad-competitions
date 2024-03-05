@@ -28,7 +28,7 @@ const CompetitionsCard = ({ id, onClick }: CompetitionsCardProps) => {
       />
       <Banner />
       <Timer />
-      <ProgressBar ticketsBought={2000} totalTickets={5995} />
+      <ProgressBar ticketsBought={2000} totalTickets={5995} px={3} />
       <Flex
         alignItems={"center"}
         justifyContent={"space-between"}
