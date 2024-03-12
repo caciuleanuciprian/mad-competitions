@@ -25,17 +25,18 @@ const ProductCarousel = ({ images }: ProductCarouselProps) => {
 
   const renderSlides = () => {
     return images?.map((slide: any, index: number) => (
-      <SplideSlide key={slide.name}>
+      <SplideSlide key={`${slide.name}-${index}`}>
         <Image
-          src={URL.createObjectURL(slide as Blob)}
-          alt={`${slide.name}-${index}`}
+          src={slide}
+          alt={`${slide}-${index}`}
           style={{ objectFit: "contain" }}
         />
       </SplideSlide>
     ));
   };
 
-  const thumbWidth = (isMobile ? 768 : 1500) / images?.length;
+  const thumbWidth =
+    (isMobile ? 768 : 1500) * (isMobile ? 0.2 : isTablet ? 0.11 : 0.225);
 
   const mainOptions: Options = {
     type: "loop",

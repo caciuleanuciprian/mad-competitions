@@ -1,21 +1,16 @@
 import { Button, Divider, Flex, Text } from "@chakra-ui/react";
-import { cartItemsAtom } from "../utils/cart.recoil";
-import { useRecoilState } from "recoil";
-import { useMemo } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../core/cart.context";
 
 const CartSummary = () => {
-  const [cartItems] = useRecoilState(cartItemsAtom);
+  const cart = useContext(CartContext);
+  const [totalCost, setTotalCost] = useState<any>(0);
+  const [totalTickets, setTotalTickets] = useState<any>(0);
 
-  const calculateSubtotal = useMemo(() => {
-    return cartItems.reduce(
-      (acc, curr) => acc + Number(curr.price) * Number(curr.amount),
-      0
-    );
-  }, [cartItems]);
-
-  const calculateTotalTickets = useMemo(() => {
-    return cartItems.reduce((acc, curr) => acc + Number(curr.amount), 0);
-  }, [cartItems]);
+  useEffect(() => {
+    setTotalCost(cart.getTotalCost());
+    setTotalTickets(cart.getTotalTickets());
+  }, [cart]);
 
   return (
     <>
@@ -36,11 +31,12 @@ const CartSummary = () => {
         >
           <Flex gap={8}>
             <Text w={"50%"}>Subtotal:</Text>
-            <Text w={"50%"}>{calculateSubtotal}$</Text>
+            {/* @ts-ignore */}
+            <Text w={"50%"}>{`${totalCost.toFixed(2)}`}$</Text>
           </Flex>
           <Flex gap={8}>
             <Text w={"50%"}>Total tickets: </Text>
-            <Text w={"50%"}>{calculateTotalTickets}</Text>
+            <Text w={"50%"}>{`${totalTickets}`}</Text>
           </Flex>
           <Button
             variant={"solid"}

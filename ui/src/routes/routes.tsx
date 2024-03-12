@@ -6,7 +6,10 @@ import LandingPage from "./landing";
 import LoginPage from "./login";
 import WinnersPage from "./winners";
 import { PagesURL } from "./consts";
-import CompetitionDetails from "./competitionDetails";
+import CompetitionDetailsPage from "./competitionDetails";
+import { TOSPage } from "./tos";
+import { FAQsPage } from "./faqs";
+import { PrivacyPolicyPage } from "./privacy";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +24,7 @@ export const router = createBrowserRouter([
   },
   {
     path: PagesURL.COMPETITION_DETAILS,
-    element: <CompetitionDetails />,
+    element: <CompetitionDetailsPage />,
     errorElement: <ErrorPage />,
   },
   {
@@ -37,6 +40,21 @@ export const router = createBrowserRouter([
   {
     path: PagesURL.LOGIN,
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PagesURL.TOS,
+    element: <TOSPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PagesURL.FAQS,
+    element: <FAQsPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PagesURL.PRIVACY,
+    element: <PrivacyPolicyPage />,
     errorElement: <ErrorPage />,
   },
 ]);

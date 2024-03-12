@@ -18,7 +18,7 @@ const FormModal = ({ isOpen, onClose, form, title }: ModalComponentProps) => {
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent bg={"gray.900"} color={"white"} maxW={"md"}>
+      <ModalContent bg={"gray.900"} color={"white"} maxW={"xl"}>
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>{form}</ModalBody>

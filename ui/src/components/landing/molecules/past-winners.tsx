@@ -1,0 +1,98 @@
+import { Flex, Spinner, useMediaQuery, useToast } from "@chakra-ui/react";
+import useAxios from "../../../lib/axios/useAxios";
+import { GetWinners } from "../../winners/core/winners.service";
+import WinnersCard from "../../winners/molecules/winnersCard";
+//@ts-ignore
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Options } from "@splidejs/splide";
+import { SectionTitle } from "../atoms/section-title";
+import { useEffect } from "react";
+import { displayToast } from "../../ui/toast";
+
+export const PastWinners = () => {
+  const toast = useToast();
+  const [isMobile] = useMediaQuery("(min-width: 0px)", { ssr: false });
+  const [isTablet] = useMediaQuery("(min-width: 768px)", { ssr: false });
+  const [isDesktop] = useMediaQuery("(min-width: 1200px)", { ssr: false });
+
+  const { data, isLoading, error } = useAxios({
+    fetchFn: GetWinners,
+    paramsOfFetch: { page: 0, size: 9 },
+    loadOnMount: true,
+  });
+
+  const thumbsOptions: Options = {
+    type: "slide",
+    perPage: isDesktop ? 3 : isTablet ? 2 : 1,
+    perMove: 1,
+    width: isDesktop
+      ? "1500px"
+      : isTablet
+      ? "1200px"
+      : isMobile
+      ? "400px"
+      : "100%",
+    arrows: true,
+    rewind: true,
+    rewindByDrag: true,
+    gap: "2rem",
+  };
+
+  useEffect(() => {
+    if (error) {
+      displayToast({ type: "error", text: "Something went wrong.", toast });
+    }
+  }, [error]);
+
+  return (
+    <Flex
+      width={"100%"}
+      maxWidth={
+        isDesktop ? "1500px" : isTablet ? "1200px" : isMobile ? "400px" : "100%"
+      }
+      margin={"0 auto"}
+      h={"100%"}
+      minH={"53.65vh"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      gap={8}
+      my={8}
+      flexWrap={"wrap"}
+      px={isMobile ? 4 : 0}
+    >
+      <SectionTitle title="Past Winners" />
+      {isLoading && (
+        <Flex
+          h={"100%"}
+          w={"100%"}
+          minH={"53.65vh"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Spinner color="white" />
+        </Flex>
+      )}
+      {!isLoading && data && (
+        <Flex w={"100%"} justifyContent={"center"} alignItems={"center"}>
+          <Splide options={thumbsOptions} aria-label="Past Winners">
+            {data?.winners?.map((card: any, index: number) => (
+              <SplideSlide
+                key={`${card.id}-${index}`}
+                style={{ marginRight: "8px" }}
+              >
+                <WinnersCard
+                  key={`${card.id}-${index}`}
+                  competitionName={card.competitionName}
+                  image={card.image}
+                  name={card.name}
+                  ticketNumber={card.ticketNumber}
+                  width={"100%"}
+                />
+              </SplideSlide>
+            ))}
+          </Splide>
+        </Flex>
+      )}
+    </Flex>
+  );
+};

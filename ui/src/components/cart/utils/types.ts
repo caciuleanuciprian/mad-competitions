@@ -4,4 +4,6 @@ export interface CartItemProps {
   amount: number;
   price: number;
   img: string;
+  questionAnswer: string;
+  maxPerCustomer?: number;
 }

@@ -5,16 +5,37 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
-const TicketsSlider = () => {
-  const [sliderValue, setSliderValue] = useState(20);
+interface TicketsSliderProps {
+  maxNumberOfTickets: number;
+  currentTicketNumber: number;
+  sliderValue: number;
+  setSliderValue: (val: number) => void;
+  isDisabled?: boolean;
+  maxPerCustomer?: number;
+}
 
+const TicketsSlider = ({
+  maxNumberOfTickets,
+  currentTicketNumber,
+  sliderValue,
+  setSliderValue,
+  isDisabled,
+  maxPerCustomer = 50,
+}: TicketsSliderProps) => {
+  // TODO Should test this!
   return (
     <Slider
+      isDisabled={isDisabled}
       colorScheme="green"
       aria-label="slider-ex-6"
-      onChange={(val) => setSliderValue(val)}
+      onChange={(val) => {
+        if (
+          val <= maxNumberOfTickets - currentTicketNumber &&
+          val <= maxPerCustomer
+        )
+          setSliderValue(val);
+      }}
       value={sliderValue}
     >
       <SliderMark

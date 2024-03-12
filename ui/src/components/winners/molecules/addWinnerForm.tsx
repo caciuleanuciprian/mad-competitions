@@ -1,40 +1,63 @@
-import { Button, ButtonGroup, Flex, FormLabel } from "@chakra-ui/react";
-import { Formiz, useForm } from "@formiz/core";
+import {
+  Button,
+  ButtonGroup,
+  Flex,
+  FormLabel,
+  Spinner,
+  useToast,
+} from "@chakra-ui/react";
+import { Formiz, useForm, useFormFields } from "@formiz/core";
 import InputField from "../../ui/forms/inputField";
 import { useRecoilState } from "recoil";
 import { fileToUploadAtom } from "../utils/winners.recoil";
 import FileUpload from "../../ui/forms/fileUpload";
-import axios from "axios";
+import useAxios from "../../../lib/axios/useAxios";
+import { AddWinner } from "../core/winners.service";
+import { useEffect } from "react";
+import { displayToast } from "../../ui/toast";
 
 interface AddWinnerFormProps {
   onClose: () => void;
 }
 
 const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
-  const addWinnerForm = useForm({
-    onSubmit: async (values) => {
-      console.log(values);
-      await handleSubmit(values);
+  const toast = useToast();
+  const addWinnerForm = useForm();
+  const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
+
+  const values = useFormFields({
+    connect: addWinnerForm,
+    selector: (field) => field.value,
+  });
+
+  const { data, isLoading, error, loadData } = useAxios({
+    fetchFn: AddWinner,
+    paramsOfFetch: {
+      name: values.name,
+      competitionName: values.competition,
+      ticketNumber: values.ticketNumber,
+      file: fileToUpload,
     },
   });
 
-  const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
-
-  const handleSubmit = async (values: any) => {
-    console.log({
-      name: values.name,
-      competition: values.competition,
-      ticketNumber: values.ticketNumber,
-      picture: fileToUpload,
-    });
-    await axios.post("/api/winners", {
-      name: values.name,
-      competition: values.competition,
-      ticketNumber: values.ticketNumber,
-      picture: fileToUpload,
-    });
+  const handleSubmit = async () => {
+    loadData();
     setFileToUpload(null);
   };
+
+  useEffect(() => {
+    if (data) {
+      displayToast({
+        type: "success",
+        text: "Winner added successfully.",
+        toast,
+      });
+      onClose();
+    }
+    if (error) {
+      displayToast({ type: "error", text: "Something went wrong.", toast });
+    }
+  }, [error, data]);
 
   return (
     <Flex flexDir={"column"} gap={4}>
@@ -60,14 +83,16 @@ const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
           variant={"outline"}
           color={"white"}
           _hover={{ color: "black", bg: "white", borderColor: "white" }}
-          onClick={() => addWinnerForm.submit()}
+          onClick={handleSubmit}
+          isDisabled={isLoading}
         >
-          Create
+          {!isLoading ? "Create" : <Spinner />}
         </Button>
         <Button
           variant={"solid"}
           _hover={{ borderColor: "white" }}
           onClick={onClose}
+          disabled={isLoading}
         >
           Cancel
         </Button>

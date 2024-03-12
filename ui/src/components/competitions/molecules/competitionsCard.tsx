@@ -1,5 +1,11 @@
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
-import giveaway from "../../../assets/giveaway.jpg";
+import {
+  Button,
+  Flex,
+  Image,
+  Text,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import Timer from "../atoms/timer";
 import Banner from "../atoms/banner";
 import ProgressBar from "../atoms/progress";
@@ -10,40 +16,100 @@ import Card from "../../ui/card/card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { ICONS_SIZE_SMALL } from "../../../lib/consts";
+import { BasicModal } from "../../ui/modal";
+import useAxios from "../../../lib/axios/useAxios";
+import { DeleteCompetition } from "../core/competitions.service";
+import { useEffect } from "react";
+import { displayToast } from "../../ui/toast";
+import { DeleteBtn } from "../../ui/card/deleteBtn";
+import { useRecoilState } from "recoil";
+import { isAdminAtom } from "../../navigation/utils/navigation.recoil";
 
 interface CompetitionsCardProps {
   id?: string;
+  alternativePrize: number;
+  endTime: string;
+  images: string[];
+  maxNumberOfTickets: number;
+  pricePerTicket: number;
+  tag: string;
+  title: string;
+  currentTicketNumber: number;
   onClick?: () => void;
+  hideFooter?: boolean;
 }
 
-const CompetitionsCard = ({ id, onClick }: CompetitionsCardProps) => {
+const CompetitionsCard = ({
+  id,
+  onClick,
+  alternativePrize,
+  endTime,
+  images,
+  maxNumberOfTickets,
+  pricePerTicket,
+  tag,
+  title,
+  currentTicketNumber,
+}: CompetitionsCardProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isAdmin] = useRecoilState(isAdminAtom);
+  const toast = useToast();
+  const { data, isLoading, error, loadData } = useAxios({
+    fetchFn: DeleteCompetition,
+    paramsOfFetch: { id: id },
+  });
+
+  const handleDelete = async () => {
+    await loadData();
+  };
+
+  useEffect(() => {
+    if (error) {
+      displayToast({ type: "error", text: "Something went wrong.", toast });
+    }
+    if (data) {
+      displayToast({ type: "success", text: "Competition deleted.", toast });
+    }
+  }, [error, data]);
+
   return (
     <Card bg={"white"} id={id} onClick={onClick}>
+      <BasicModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onClick={handleDelete}
+        isLoading={isLoading}
+        title="Delete Competition"
+        body="Are you sure you want to delete this competition? You will not be able to recover it after it's gone."
+      />
+      {isAdmin && <DeleteBtn onClick={onOpen} />}
       <Image
         borderTopRadius={"md"}
-        src={giveaway}
+        src={images[0]}
         alt="giveaway-picture"
         w={"100%"}
         h={"50%"}
       />
-      <Banner />
-      <Timer />
-      <ProgressBar ticketsBought={2000} totalTickets={5995} px={3} />
+      <Banner endTime={endTime} />
+      <Timer endTime={endTime} />
+      <ProgressBar
+        ticketsBought={currentTicketNumber}
+        totalTickets={maxNumberOfTickets}
+        px={3}
+      />
       <Flex
         alignItems={"center"}
         justifyContent={"space-between"}
         mt={2}
         px={4}
       >
-        <Price price={29.95} />
-        <TagDisplay tags={["Car", "Tech"]} />
+        <Price price={pricePerTicket} />
+        <TagDisplay tags={[tag]} />
       </Flex>
-      <Text fontSize={"lg"} px={4} py={4} fontWeight={"semibold"}>
-        {
-          "Crazy Lambo or $100K only on this website - draw today so be quick haha!"
-        }
+      <Text fontSize={"lg"} px={4} py={4} fontWeight={"semibold"} h={"100px"}>
+        {title}
       </Text>
-      <Alternative alternative={15000} />
+      <Alternative alternative={alternativePrize} />
       <Button
         variant={"solid"}
         background={"green.400"}

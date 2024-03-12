@@ -17,15 +17,25 @@ interface InputFieldProps {
   type?: string;
   label?: string;
   name: string;
+  placeholder?: string;
+  isReadonly?: boolean;
 }
 
 const InputField = <FormattedValue = string,>(
   props: MyFieldProps<FormattedValue> | InputFieldProps | any
 ) => {
   const { value, setValue, isValid, errorMessage } = useField(props);
-  const { leftEl, rightEl, name, type, label } = props;
+  const {
+    leftEl,
+    rightEl,
+    name,
+    type,
+    label,
+    placeholder = label,
+    isReadonly,
+  } = props;
   return (
-    <Flex flexDir={"column"}>
+    <Flex flexDir={"column"} width={"100%"}>
       <FormLabel fontSize={"sm"} color={"white"} textTransform={"capitalize"}>
         {label ? label : name}
       </FormLabel>
@@ -47,6 +57,8 @@ const InputField = <FormattedValue = string,>(
           value={value ?? ""}
           onChange={(e) => setValue(e.target.value)}
           borderColor={isValid ? "" : "red.500"}
+          placeholder={placeholder}
+          isDisabled={isReadonly}
         />
         {!isValid && (
           <Text fontSize={"xs"} color={"red.500"}>

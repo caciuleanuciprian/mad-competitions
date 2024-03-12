@@ -3,22 +3,21 @@ import { Link } from "react-router-dom";
 import { Links, LinkIDS } from "../../navigation/utils/consts";
 
 interface CopyrightProps {
-  isMobile: boolean;
   isTablet: boolean;
 }
 
-const Copyright = ({ isMobile, isTablet }: CopyrightProps) => {
+const Copyright = ({ isTablet }: CopyrightProps) => {
   return (
     <Flex
       py={4}
       justifyContent={"space-between"}
       alignItems={"center"}
-      flexDir={isMobile || isTablet ? "column" : "row"}
+      flexDir={isTablet ? "column" : "row"}
     >
       <Text
         fontSize={"xs"}
         wordBreak={"break-all"}
-        px={isMobile || isTablet ? 6 : 0}
+        px={isTablet ? 6 : 0}
         textAlign={"center"}
       >
         Copyright © 2024{" "}

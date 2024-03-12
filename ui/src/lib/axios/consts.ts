@@ -7,3 +7,5 @@ export const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const COMPETITIONS_URL = `${BASE_URL}${COMPETITIONS_PREFIX}`;
 export const WINNERS_URL = `${BASE_URL}${WINNERS_PREFIX}`;
 export const PARTICIPANTS_URL = `${BASE_URL}${PARTICIPANTS_PREFIX}`;
+
+export const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_URL;

@@ -1,12 +1,14 @@
 import { Flex, useMediaQuery } from "@chakra-ui/react";
 
 const CardContainer = ({ children }: any) => {
-  const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
+  const [isMobile] = useMediaQuery("(min-width: 0px)", { ssr: false });
+  const [isTablet] = useMediaQuery("(min-width: 768px)", { ssr: false });
+  const [isDesktop] = useMediaQuery("(min-width: 1500px)", { ssr: false });
 
   return (
     <Flex
       width={"100%"}
-      maxWidth={"1500px"}
+      maxWidth={isDesktop ? "1500px" : isTablet ? "1200px" : "100%"}
       margin={"0 auto"}
       h={"100%"}
       minH={"53.65vh"}

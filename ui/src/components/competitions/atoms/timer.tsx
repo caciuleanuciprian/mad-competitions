@@ -1,12 +1,18 @@
 import { Divider, Flex, Spinner, Text } from "@chakra-ui/react";
+import { differenceInMilliseconds } from "date-fns";
 import { useEffect, useState } from "react";
 
 interface TimerProps {
   background?: string;
   color?: string;
+  endTime: string;
 }
 
-const Timer = ({ background = "white", color = "gray.900" }: TimerProps) => {
+const Timer = ({
+  background = "white",
+  color = "gray.900",
+  endTime,
+}: TimerProps) => {
   const [time, setTime] = useState({
     days: 0,
     hours: 0,
@@ -18,7 +24,8 @@ const Timer = ({ background = "white", color = "gray.900" }: TimerProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const calculateTimeLeft = () => {
-    const difference = Number(new Date("2024-01-29")) - Number(new Date());
+    const end = new Date(endTime);
+    const difference = differenceInMilliseconds(end, Date.now());
 
     if (difference > 0) {
       setTime({

@@ -11,10 +11,14 @@ function RadioCard(props: any) {
 
   const input = getInputProps();
   const checkbox = getRadioProps();
-
   return (
-    <Box as="label" w={"100%"} textAlign={"center"}>
-      <input {...input} />
+    <Box
+      as="label"
+      w={"100%"}
+      textAlign={"center"}
+      opacity={props.isDisabled ? 0.5 : 1}
+    >
+      <input {...input} disabled={props.isDisabled} />
       <Box
         {...checkbox}
         cursor="pointer"
@@ -38,9 +42,15 @@ interface QuestionRadioProps {
   options: string[];
   name: string;
   onChange: (value?: string) => void;
+  isDisabled?: boolean;
 }
 
-function QuestionRadio({ options, name, onChange }: QuestionRadioProps) {
+function QuestionRadio({
+  options,
+  name,
+  onChange,
+  isDisabled,
+}: QuestionRadioProps) {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: name,
     onChange: onChange,
@@ -56,10 +66,14 @@ function QuestionRadio({ options, name, onChange }: QuestionRadioProps) {
       justifyContent={"space-between"}
       flexDir={isMobile ? "column" : "row"}
     >
-      {options.map((value: any) => {
+      {options.map((value: any, index: number) => {
         const radio = getRadioProps({ value });
         return (
-          <RadioCard key={value} {...radio}>
+          <RadioCard
+            key={`${value}-${index}`}
+            {...radio}
+            isDisabled={isDisabled}
+          >
             {value}
           </RadioCard>
         );

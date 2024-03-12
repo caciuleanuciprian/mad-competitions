@@ -1,4 +1,5 @@
 import { Flex, Tag } from "@chakra-ui/react";
+import { tagToLabel } from "../utils/consts";
 
 interface TagDisplayProps {
   tags: string[];
@@ -15,7 +16,7 @@ const TagDisplay = ({ tags }: TagDisplayProps) => {
     >
       {tags.map((tag, index) => (
         <Tag key={`${tag}-${index}`} bg={"green.300"} color={"white"}>
-          {tag}
+          {tagToLabel(tag)}
         </Tag>
       ))}
     </Flex>

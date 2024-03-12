@@ -15,13 +15,13 @@ const Price = ({ price, color }: PriceProps) => {
     >
       <Text
         color={"green.400"}
-        fontSize={"3xl"}
+        fontSize={"2xl"}
         fontWeight={"bold"}
         display={"inline"}
       >
         {`$${price}`}
       </Text>
-      <Text color={color} fontSize={"sm"} display={"inline"} ml={1}>
+      <Text color={color} fontSize={"xs"} display={"inline"} ml={1}>
         Per Entry
       </Text>
     </Flex>

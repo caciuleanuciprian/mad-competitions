@@ -2,23 +2,33 @@ import { Formiz, useForm } from "@formiz/core";
 import { isEmail, isNotEmptyString, isRequired } from "@formiz/validations";
 import InputField from "../../ui/forms/inputField";
 import TextareaForm from "../../ui/forms/textareaForm";
-import { Button, ButtonGroup, Flex } from "@chakra-ui/react";
+import { Button, ButtonGroup, Flex, useToast } from "@chakra-ui/react";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS_SIZE_SMALL } from "../../../lib/consts";
+import { useSubmit } from "@formspree/react";
+import { displayToast } from "../../ui/toast";
 
 interface ContactFormProps {
   order: number;
 }
 
 const ContactForm = ({ order }: ContactFormProps) => {
-  const handleSubmit = (values: any) => {
-    console.log(values);
-  };
+  const toast = useToast();
+  const submit = useSubmit("mvoeqdgz", {
+    onError: (_e) =>
+      displayToast({ type: "error", text: "Message failed to send", toast }),
+    onSuccess: (_e) =>
+      displayToast({
+        type: "success",
+        text: "Message sent successfully",
+        toast,
+      }),
+  });
 
-  const form = useForm({ onSubmit: handleSubmit }); // create a new form
+  const form = useForm({ onSubmit: submit });
 
   return (
     <Flex
@@ -48,6 +58,7 @@ const ContactForm = ({ order }: ContactFormProps) => {
                 leftEl={
                   <FontAwesomeIcon fontSize={ICONS_SIZE_SMALL} icon={faUser} />
                 }
+                placeholder={"Name"}
                 validations={[
                   {
                     handler: isRequired() && isNotEmptyString(),
@@ -66,6 +77,7 @@ const ContactForm = ({ order }: ContactFormProps) => {
                     icon={faEnvelope}
                   />
                 }
+                placeholder={"Email"}
                 validations={[
                   {
                     handler: isRequired() && isEmail(),
@@ -84,6 +96,7 @@ const ContactForm = ({ order }: ContactFormProps) => {
                     icon={faLocationDot}
                   />
                 }
+                placeholder={"Address"}
                 validations={[
                   {
                     handler: isRequired() && isNotEmptyString(),
@@ -108,10 +121,18 @@ const ContactForm = ({ order }: ContactFormProps) => {
                 variant={"outline"}
                 color={"white"}
                 _hover={{ color: "black", bg: "white", borderColor: "white" }}
+                onClick={() => {
+                  form.submit();
+                  form.reset();
+                }}
               >
                 Submit
               </Button>
-              <Button variant={"solid"} _hover={{ borderColor: "white" }}>
+              <Button
+                variant={"solid"}
+                _hover={{ borderColor: "white" }}
+                onClick={() => form.reset()}
+              >
                 Clear
               </Button>
             </ButtonGroup>

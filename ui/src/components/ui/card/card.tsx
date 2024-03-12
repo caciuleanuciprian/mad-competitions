@@ -7,9 +7,19 @@ interface CardProps {
   onClick?: () => void;
   centered?: boolean;
   id?: string;
+  hover?: any;
+  width?: string;
 }
 
-const Card = ({ children, bg, onClick, centered, id }: CardProps) => {
+const Card = ({
+  children,
+  bg,
+  onClick,
+  centered,
+  id,
+  hover = { cursor: "pointer" },
+  width = "450px",
+}: CardProps) => {
   return (
     <Flex
       bg={bg}
@@ -19,12 +29,12 @@ const Card = ({ children, bg, onClick, centered, id }: CardProps) => {
       boxShadow={"5px 5px 15px 0px rgba(0,0,0,0.5)"}
       transition={"all 0.2s ease-in-out"}
       w={`${CARD_WIDTH}`}
-      _hover={{
-        cursor: "pointer",
-      }}
+      _hover={hover}
       justifyContent={centered ? "center" : "space-between"}
       onClick={onClick ? onClick : () => {}}
       id={id}
+      position={"relative"}
+      width={width}
     >
       {children}
     </Flex>

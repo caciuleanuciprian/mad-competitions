@@ -15,7 +15,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const Navigation = () => {
   const [isActive, setIsActive] = useRecoilState(currentActivePageAtom);
   const navigate = useNavigate();
-  const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
+  const [isTablet] = useMediaQuery("(min-width: 768px)", { ssr: false });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -30,7 +30,7 @@ const Navigation = () => {
           }}
           marginRight={4}
         />
-        {!isMobile && (
+        {isTablet && (
           <Flex>
             {Links.map((link: NavLinkProps, index: number) => (
               <NavLink
@@ -46,10 +46,10 @@ const Navigation = () => {
         )}
       </Flex>
 
-      {isMobile && <MobileNav isOpen={isOpen} onClose={onClose} />}
+      {!isTablet && <MobileNav isOpen={isOpen} onClose={onClose} />}
 
       <Flex justifyContent={"flex-end"} gap={4}>
-        {isMobile && (
+        {!isTablet && (
           <NavIcon ariaLabel={"Open Menu"} onClick={onOpen} icon={faBars} />
         )}
         <Cart />

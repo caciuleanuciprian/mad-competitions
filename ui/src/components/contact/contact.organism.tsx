@@ -3,10 +3,10 @@ import ContactForm from "./molecules/contactForm";
 import ContactDetails from "./molecules/contactDetails";
 
 const Contact = () => {
-  const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
+  const [isTablet] = useMediaQuery("(min-width: 768px)", { ssr: false });
   return (
     <Flex
-      width={isMobile ? "90%" : "100%"}
+      width={!isTablet ? "90%" : "100%"}
       maxWidth={"900px"}
       margin={"0 auto"}
       h={"100%"}
@@ -16,10 +16,10 @@ const Contact = () => {
       alignItems={"flex-start"}
       bg={"gray.900"}
       borderRadius={"md"}
-      flexDir={isMobile ? "column" : "row"}
+      flexDir={!isTablet ? "column" : "row"}
     >
-      <ContactForm order={isMobile ? 2 : 1} />
-      <ContactDetails order={isMobile ? 1 : 2} />
+      <ContactForm order={!isTablet ? 2 : 1} />
+      <ContactDetails order={!isTablet ? 1 : 2} />
     </Flex>
   );
 };

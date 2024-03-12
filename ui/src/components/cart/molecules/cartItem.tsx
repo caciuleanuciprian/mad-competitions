@@ -10,45 +10,28 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { CartItemProps } from "../utils/types";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS_SIZE_SMALL } from "../../../lib/consts";
-import { useRecoilState } from "recoil";
-import { cartItemsAtom } from "../utils/cart.recoil";
 
-const CartItem = ({ title, amount, price, img, id }: CartItemProps) => {
+import { CartContext } from "../core/cart.context";
+
+const CartItem = ({
+  title,
+  amount,
+  price,
+  img,
+  id,
+  maxPerCustomer = 50,
+}: CartItemProps) => {
   const [itemAmount, setItemAmount] = useState<number>(amount);
-  const [cartItems, setCartItems] = useRecoilState(cartItemsAtom);
+  const cart = useContext(CartContext);
 
   const handleChange = (e: any) => {
     setItemAmount(e);
+    cart.modifiyQuantity(id, Number(e));
   };
-
-  const updateCartItems = () => {
-    const updatedCartItems = cartItems.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          amount: itemAmount,
-        };
-      }
-      return item;
-    });
-    setCartItems(updatedCartItems);
-  };
-
-  const handleRemoveItemFromArray = () => {
-    const filteredItems = cartItems.filter((item) => item.id !== id);
-    setCartItems(filteredItems);
-  };
-
-  useEffect(() => {
-    updateCartItems();
-    if (itemAmount === 0) {
-      handleRemoveItemFromArray();
-    }
-  }, [itemAmount]);
 
   return (
     <Flex
@@ -58,7 +41,14 @@ const CartItem = ({ title, amount, price, img, id }: CartItemProps) => {
       id={id}
     >
       <Flex>
-        <Image borderRadius={"lg"} w={"48"} h={"32"} src={img} alt={title} />
+        <Image
+          borderRadius={"lg"}
+          w={"48"}
+          h={"32"}
+          src={img}
+          alt={title}
+          objectFit={"cover"}
+        />
       </Flex>
       <Flex
         w={"100%"}
@@ -72,7 +62,7 @@ const CartItem = ({ title, amount, price, img, id }: CartItemProps) => {
           <IconButton
             outline={"none"}
             _hover={{ borderColor: "transparent" }}
-            onClick={handleRemoveItemFromArray}
+            onClick={() => cart.deleteFromCart(id)}
             justifyItems={"center"}
             alignItems={"center"}
             aria-label={"Remove Item"}
@@ -89,10 +79,10 @@ const CartItem = ({ title, amount, price, img, id }: CartItemProps) => {
           <Flex alignItems={"center"}>
             <Flex w={"80px"} mr={2}>
               <NumberInput
-                defaultValue={Number(itemAmount)}
+                value={Number(itemAmount)}
                 onChange={(e) => handleChange(e)}
                 min={1}
-                max={999}
+                max={maxPerCustomer}
                 step={1}
               >
                 <NumberInputField readOnly />
@@ -104,7 +94,7 @@ const CartItem = ({ title, amount, price, img, id }: CartItemProps) => {
             </Flex>
             <Text>x {price}$</Text>
           </Flex>
-          <Text>{price * itemAmount}$</Text>
+          <Text>{(price * itemAmount).toFixed(2)}$</Text>
         </Flex>
       </Flex>
     </Flex>

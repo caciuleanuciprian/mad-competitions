@@ -1,145 +1,197 @@
 import {
   Button,
   ButtonGroup,
-  Checkbox,
-  CheckboxGroup,
   Flex,
   FormLabel,
+  Radio,
+  RadioGroup,
+  Select,
+  Spinner,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
-import { Formiz, useForm } from "@formiz/core";
+import { Formiz, useForm, useFormFields } from "@formiz/core";
 import InputField from "../../ui/forms/inputField";
 import TextareaForm from "../../ui/forms/textareaForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { filesToUploadAtom } from "../utils/competitions.recoil";
-import axios from "axios";
-import MultipleFilesUpload from "../../ui/forms/multipleFilesUpload";
-import FileUpload from "../../ui/forms/fileUpload";
 import { fileToUploadAtom } from "../../winners/utils/winners.recoil";
 import { useEffect, useState } from "react";
 import { ICONS_SIZE } from "../../../lib/consts";
+import { BE_Tags, TagsArray, tagToLabel } from "../utils/consts";
+import useAxios from "../../../lib/axios/useAxios";
+import { AddCompetition } from "../core/competitions.service";
+import { UploadImage } from "../../ui/forms/imageUpload";
+import { displayToast } from "../../ui/toast";
 
 interface AddCompetitionFormProps {
   onClose: () => void;
 }
 
-enum Tags {
-  CAR = "Car",
-  TECH = "Tech",
-  CASH = "Cash",
-  OTHER = "Other",
-}
-
 const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
-  const addCompetitionForm = useForm({
-    onSubmit: async (values) => {
-      console.log(values);
-      await handleSubmit(values);
-      resetForm();
-    },
+  const toast = useToast();
+  const addCompetitionForm = useForm();
+
+  const values = useFormFields({
+    connect: addCompetitionForm,
+    selector: (field) => field.value,
   });
 
   const [filesToUpload, setFilesToUpload] = useRecoilState(filesToUploadAtom);
   const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
 
-  const [checkedItems, setCheckedItems] = useState(["", "", "", ""]);
+  const [checkedItem, setCheckedItem] = useState<BE_Tags | string>(
+    BE_Tags.OTHER
+  );
+  const [correctAnswer, setCorrectAnswer] = useState<string>("1" as string);
 
-  console.log(checkedItems);
-
-  const handleSubmit = async (values: any) => {
-    console.log({
+  const { data, isLoading, error, loadData } = useAxios({
+    fetchFn: AddCompetition,
+    paramsOfFetch: {
       title: values.title,
       description: values.description,
-      maxTickets: values.maxTickets,
-      ticketPrice: values.ticketPrice,
-      startDate: values.startDate,
-      endDate: values.endDate,
-      imageShowcase: fileToUpload,
-      imagesCarousel: filesToUpload,
+      question: {
+        question: values.question,
+        answer1: values.answer1,
+        answer2: values.answer2,
+        answer3: values.answer3,
+        correctAnswer: correctAnswer,
+      },
+      endTime: values.endTime,
       alternativePrize: values.alternativePrize,
-      tags: checkedItems.filter((item) => item !== ""),
-    });
-    await axios.post("/api/competitions", {
-      title: values.title,
-      description: values.description,
-      maxTickets: values.maxTickets,
-      ticketPrice: values.ticketPrice,
-      startDate: values.startDate,
-      endDate: values.endDate,
-      imageShowcase: fileToUpload,
-      imagesCarousel: filesToUpload,
-      alternativePrize: values.alternativePrize,
-      tags: checkedItems.filter((item) => item !== ""),
-    });
+      tag: checkedItem,
+      pricePerTicket: values.pricePerTicket,
+      maxNumberOfTickets: values.maxNumberOfTickets,
+      images: fileToUpload &&
+        // @ts-ignore
+        filesToUpload && [fileToUpload[0], ...filesToUpload],
+    },
+  });
+
+  const handleSubmit = async () => {
+    await loadData();
   };
 
   const resetForm = () => {
     addCompetitionForm.reset();
-    setFilesToUpload(null);
+    setFilesToUpload([]);
     setFileToUpload(null);
   };
 
   useEffect(() => {
-    setFilesToUpload(null);
+    setFilesToUpload([]);
     setFileToUpload(null);
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      onClose();
+      resetForm();
+      displayToast({
+        type: "success",
+        text: "Competition added successfully.",
+        toast,
+      });
+    }
+    if (error) {
+      displayToast({ type: "error", text: "Something went wrong.", toast });
+    }
+  }, [data, error]);
+
   return (
-    <Flex flexDir={"column"} gap={4}>
+    <Flex flexDir={"column"} gap={4} width={"100%"}>
       <Formiz connect={addCompetitionForm}>
-        <InputField name="title" type="text" label="Competition Title" />
+        <InputField
+          name="title"
+          type="text"
+          label="Competition Title"
+          isReadonly={isLoading}
+        />
         <TextareaForm
           name="description"
           type="text"
           label="Competition Description"
+          height={"100px"}
+          placeholder={"Competition Description"}
+          isReadonly={isLoading}
         />
 
         <Flex gap={4}>
-          <InputField name="maxTickets" type="number" label="Max Tickets" />
-          <InputField name="ticketPrice" type="number" label="Ticket Price" />
+          <InputField
+            name="maxNumberOfTickets"
+            type="number"
+            label="Max Number Of Tickets"
+            isReadonly={isLoading}
+          />
+          <InputField
+            name="pricePerTicket"
+            type="number"
+            label="Price Per Ticket"
+            isReadonly={isLoading}
+          />
         </Flex>
-
+        <Flex gap={4}>
+          <InputField
+            name="question"
+            type="text"
+            label="Question"
+            isReadonly={isLoading}
+          />
+          <Flex flexDirection={"column"} width={"100%"}>
+            <FormLabel
+              fontSize={"sm"}
+              color={"white"}
+              textTransform={"capitalize"}
+            >
+              Correct Answer
+            </FormLabel>
+            <Select
+              onChange={(e) => setCorrectAnswer(e.target.value)}
+              placeholder="Correct answer"
+              color={"black"}
+              bg={"white"}
+              isDisabled={isLoading}
+            >
+              <option value="1">Answer 1</option>
+              <option value="2">Answer 2</option>
+              <option value="3">Answer 3</option>
+            </Select>
+          </Flex>
+        </Flex>
+        <Flex gap={4}>
+          <InputField
+            name="answer1"
+            type="text"
+            label="Answer 1"
+            isReadonly={isLoading}
+          />
+          <InputField
+            name="answer2"
+            type="text"
+            label="Answer 2"
+            isReadonly={isLoading}
+          />
+          <InputField
+            name="answer3"
+            type="text"
+            label="Answer 3"
+            isReadonly={isLoading}
+          />
+        </Flex>
         <InputField
-          name="startDate"
-          type="datetime-local"
-          label="Start Date"
-          rightEl={<FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCalendar} />}
-        />
-        <InputField
-          name="endDate"
+          name="endTime"
           type="datetime-local"
           label="End Date"
           rightEl={<FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCalendar} />}
+          isReadonly={isLoading}
         />
-
-        <Flex flexDir={"column"}>
-          <FormLabel
-            fontSize={"sm"}
-            color={"white"}
-            textTransform={"capitalize"}
-          >
-            Image Showcase
-          </FormLabel>
-          <FileUpload />
-        </Flex>
-
-        <Flex flexDir={"column"}>
-          <FormLabel
-            fontSize={"sm"}
-            color={"white"}
-            textTransform={"capitalize"}
-          >
-            Images Carousel
-          </FormLabel>
-          <MultipleFilesUpload />
-        </Flex>
-
         <InputField
           name="alternativePrize"
           type="number"
           label="Alternative Prize"
+          isReadonly={isLoading}
         />
 
         <Flex flexDir={"column"}>
@@ -150,113 +202,76 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
           >
             Tags
           </FormLabel>
-          {/* Should be redesigned */}
-          <CheckboxGroup colorScheme="green">
+
+          <RadioGroup colorScheme="green" isDisabled={isLoading}>
             <Stack direction="row" spacing={4}>
-              <Checkbox
-                isChecked={checkedItems[0] !== ""}
-                value={Tags.CAR}
-                onChange={(e) =>
-                  e.target.checked
-                    ? setCheckedItems([
-                        e.target.value,
-                        checkedItems[1],
-                        checkedItems[2],
-                        checkedItems[3],
-                      ])
-                    : setCheckedItems([
-                        "",
-                        checkedItems[1],
-                        checkedItems[2],
-                        checkedItems[3],
-                      ])
-                }
-              >
-                Car
-              </Checkbox>
-              <Checkbox
-                isChecked={checkedItems[1] !== ""}
-                value={Tags.TECH}
-                onChange={(e) =>
-                  e.target.checked
-                    ? setCheckedItems([
-                        checkedItems[0],
-                        e.target.value,
-                        checkedItems[2],
-                        checkedItems[3],
-                      ])
-                    : setCheckedItems([
-                        checkedItems[0],
-                        "",
-                        checkedItems[2],
-                        checkedItems[3],
-                      ])
-                }
-              >
-                Tech
-              </Checkbox>
-              <Checkbox
-                isChecked={checkedItems[2] !== ""}
-                value={Tags.CASH}
-                onChange={(e) =>
-                  e.target.checked
-                    ? setCheckedItems([
-                        checkedItems[0],
-                        checkedItems[1],
-                        e.target.value,
-                        checkedItems[3],
-                      ])
-                    : setCheckedItems([
-                        checkedItems[0],
-                        checkedItems[1],
-                        "",
-                        checkedItems[3],
-                      ])
-                }
-              >
-                Cash
-              </Checkbox>
-              <Checkbox
-                isChecked={checkedItems[3] !== ""}
-                value={Tags.OTHER}
-                onChange={(e) =>
-                  e.target.checked
-                    ? setCheckedItems([
-                        checkedItems[0],
-                        checkedItems[1],
-                        checkedItems[2],
-                        e.target.value,
-                      ])
-                    : setCheckedItems([
-                        checkedItems[0],
-                        checkedItems[1],
-                        checkedItems[2],
-                        "",
-                      ])
-                }
-              >
-                Other
-              </Checkbox>
+              {TagsArray.map((tag, index) => (
+                <Radio
+                  key={`${tag}-${index}`}
+                  value={tag}
+                  isChecked={checkedItem === tag}
+                  onChange={(e) => setCheckedItem(e.target.value)}
+                >
+                  {tagToLabel(tag)}
+                </Radio>
+              ))}
             </Stack>
-          </CheckboxGroup>
-          <ButtonGroup py={4} justifyContent={"flex-end"}>
-            <Button
-              variant={"outline"}
-              color={"white"}
-              _hover={{ color: "black", bg: "white", borderColor: "white" }}
-              onClick={() => addCompetitionForm.submit()}
-            >
-              Create
-            </Button>
-            <Button
-              variant={"solid"}
-              _hover={{ borderColor: "white" }}
-              onClick={onClose}
-            >
-              Cancel
-            </Button>
-          </ButtonGroup>
+          </RadioGroup>
         </Flex>
+
+        <Flex flexDir={"column"}>
+          <FormLabel
+            fontSize={"sm"}
+            color={"white"}
+            textTransform={"capitalize"}
+          >
+            Image Showcase
+          </FormLabel>
+          <UploadImage
+            file={fileToUpload}
+            setFile={setFileToUpload as any}
+            isReadonly={isLoading}
+            maxFiles={1}
+          />
+        </Flex>
+
+        <Flex flexDir={"column"}>
+          <FormLabel
+            fontSize={"sm"}
+            color={"white"}
+            textTransform={"capitalize"}
+          >
+            Images Carousel
+          </FormLabel>
+          <UploadImage
+            file={filesToUpload}
+            setFile={setFilesToUpload as any}
+            isReadonly={isLoading}
+          />
+        </Flex>
+
+        <ButtonGroup py={4} justifyContent={"flex-end"}>
+          <Button
+            variant={"outline"}
+            color={"white"}
+            _hover={{ color: "black", bg: "white", borderColor: "white" }}
+            onClick={handleSubmit}
+            isDisabled={isLoading}
+          >
+            {!isLoading ? "Create" : <Spinner />}
+          </Button>
+          <Button
+            variant={"solid"}
+            _hover={{ borderColor: "white" }}
+            onClick={() => {
+              onClose();
+              resetForm();
+            }}
+            isDisabled={isLoading}
+          >
+            Cancel
+          </Button>
+        </ButtonGroup>
       </Formiz>
     </Flex>
   );

@@ -8,8 +8,7 @@ import Copyright from "./atoms/copyright";
 // TODO Separate footer into sections/smaller components
 
 const Footer = () => {
-  const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
-  const [isTablet] = useMediaQuery("(max-width: 1200px)", { ssr: false });
+  const [isTablet] = useMediaQuery("(max-width: 768px)", { ssr: false });
 
   return (
     <Flex
@@ -32,15 +31,15 @@ const Footer = () => {
           alignItems={"center"}
           w={"100%"}
           py={4}
-          flexDir={isMobile || isTablet ? "column" : "row"}
+          flexDir={isTablet ? "column" : "row"}
         >
           <Social />
           <Payment />
         </Flex>
         <Divider />
-        <FooterLinks isMobile={isMobile} isTablet={isTablet} />
+        <FooterLinks isTablet={isTablet} />
         <Divider />
-        <Copyright isMobile={isMobile} isTablet={isTablet} />
+        <Copyright isTablet={isTablet} />
       </Flex>
     </Flex>
   );

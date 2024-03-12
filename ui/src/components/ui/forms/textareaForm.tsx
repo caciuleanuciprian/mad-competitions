@@ -11,13 +11,21 @@ interface InputFieldProps {
   rightEl?: any;
   type?: string;
   name: string;
+  height?: string;
+  placeholder?: string;
+  isReadonly?: boolean;
 }
 
 const TextareaForm = <FormattedValue = string,>(
   props: MyFieldProps<FormattedValue> | InputFieldProps | any
 ) => {
   const { value, setValue, isValid, errorMessage } = useField(props);
-  const { name } = props;
+  const {
+    name,
+    height = "300px",
+    placeholder = "Enter your message here...",
+    isReadonly,
+  } = props;
   return (
     <Flex flexDir="column">
       <FormLabel fontSize={"sm"} color={"white"} textTransform={"capitalize"}>
@@ -30,9 +38,11 @@ const TextareaForm = <FormattedValue = string,>(
         value={value ?? ""}
         onChange={(e) => setValue(e.target.value)}
         borderColor={isValid ? "" : "red.500"}
-        minH={"300px"}
+        minH={height}
         h={"100%"}
         resize={"none"}
+        placeholder={placeholder}
+        isDisabled={isReadonly}
       />
       {!isValid && (
         <Text fontSize={"xs"} color={"red.500"}>

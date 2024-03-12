@@ -1,4 +1,3 @@
 export interface BannerProps {
-  text?: string;
-  color?: string;
+  endTime: string;
 }

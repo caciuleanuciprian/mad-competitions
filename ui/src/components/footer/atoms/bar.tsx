@@ -8,8 +8,7 @@ import {
 import { ICONS_SIZE } from "../../../lib/consts";
 
 const Bar = () => {
-  const [isMobile] = useMediaQuery("(max-width: 768px)", { ssr: false });
-  const [isTablet] = useMediaQuery("(max-width: 1200px)", { ssr: false });
+  const [isTablet] = useMediaQuery("(max-width: 768px)", { ssr: false });
   return (
     <Flex
       w={"100%"}
@@ -27,7 +26,7 @@ const Bar = () => {
         justifyContent={"space-between"}
         alignItems={"center"}
         maxW={"1500px"}
-        flexDir={isMobile || isTablet ? "column" : "row"}
+        flexDir={isTablet ? "column" : "row"}
         gap={4}
       >
         <Flex alignItems={"center"}>
