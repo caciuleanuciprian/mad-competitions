@@ -25,6 +25,7 @@ import useAxios from "../../../lib/axios/useAxios";
 import { AddCompetition } from "../core/competitions.service";
 import { UploadImage } from "../../ui/forms/imageUpload";
 import { displayToast } from "../../ui/toast";
+import { shouldRefetchAtom } from "../../navigation/utils/navigation.recoil";
 
 interface AddCompetitionFormProps {
   onClose: () => void;
@@ -32,6 +33,7 @@ interface AddCompetitionFormProps {
 
 const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
   const toast = useToast();
+  const [, setShouldRefetch] = useRecoilState(shouldRefetchAtom);
   const addCompetitionForm = useForm();
 
   const values = useFormFields({
@@ -94,6 +96,7 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
         text: "Competition added successfully.",
         toast,
       });
+      setShouldRefetch(true);
     }
     if (error) {
       displayToast({ type: "error", text: "Something went wrong.", toast });

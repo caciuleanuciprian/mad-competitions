@@ -9,3 +9,8 @@ export const isAdminAtom = atom({
   key: "isAdmin",
   default: true,
 });
+
+export const shouldRefetchAtom = atom({
+  key: "shouldRefetch",
+  default: false,
+});

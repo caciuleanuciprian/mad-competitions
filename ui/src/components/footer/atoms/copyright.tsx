@@ -13,6 +13,7 @@ const Copyright = ({ isTablet }: CopyrightProps) => {
       justifyContent={"space-between"}
       alignItems={"center"}
       flexDir={isTablet ? "column" : "row"}
+      px={4}
     >
       <Text
         fontSize={"xs"}

@@ -1,10 +1,14 @@
 import CompetitionsCard from "./molecules/competitionsCard";
 import { useRecoilState } from "recoil";
-import { isAdminAtom } from "../navigation/utils/navigation.recoil";
+import {
+  isAdminAtom,
+  shouldRefetchAtom,
+} from "../navigation/utils/navigation.recoil";
 import CardContainer from "../ui/card/cardContainer";
 import AddCard from "../ui/card/addCard";
 import AddCompetitionForm from "./molecules/addCompetitionForm";
 import {
+  Flex,
   Spinner,
   useDisclosure,
   useMediaQuery,
@@ -24,7 +28,8 @@ const Competitions = () => {
   const [isAdmin] = useRecoilState(isAdminAtom);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  const [filterBy, setFilterBy] = useState("");
+  const [shouldRefetch, setShouldRefetch] = useRecoilState(shouldRefetchAtom);
+  const [filterBy, setFilterBy] = useState(null);
   const [isTablet] = useMediaQuery("(min-width: 768px)", { ssr: false });
 
   const [currentPage, setCurrentPage] = useState(null);
@@ -50,7 +55,7 @@ const Competitions = () => {
 
   useEffect(() => {
     if (filterBy !== null) {
-      loadData({ page: 0, size: 9, tag: filterBy });
+      loadData();
     }
   }, [filterBy]);
 
@@ -59,6 +64,13 @@ const Competitions = () => {
       loadData();
     }
   }, [currentPage]);
+
+  useEffect(() => {
+    if (shouldRefetch) {
+      loadData();
+      setShouldRefetch(false);
+    }
+  }, [shouldRefetch]);
 
   return (
     <>
@@ -93,6 +105,9 @@ const Competitions = () => {
               onClick={() => navigate(`${PagesURL.COMPETITIONS}/${card.id}`)}
             />
           ))
+        )}
+        {!isLoading && data?.length === 0 && (
+          <Flex color={"white"}>No competitions found.</Flex>
         )}
       </CardContainer>
       <Pagination

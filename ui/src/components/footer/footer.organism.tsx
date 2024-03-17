@@ -32,6 +32,8 @@ const Footer = () => {
           w={"100%"}
           py={4}
           flexDir={isTablet ? "column" : "row"}
+          px={4}
+          gap={4}
         >
           <Social />
           <Payment />

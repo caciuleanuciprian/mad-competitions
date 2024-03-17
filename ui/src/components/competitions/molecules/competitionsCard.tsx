@@ -23,7 +23,10 @@ import { useEffect } from "react";
 import { displayToast } from "../../ui/toast";
 import { DeleteBtn } from "../../ui/card/deleteBtn";
 import { useRecoilState } from "recoil";
-import { isAdminAtom } from "../../navigation/utils/navigation.recoil";
+import {
+  isAdminAtom,
+  shouldRefetchAtom,
+} from "../../navigation/utils/navigation.recoil";
 
 interface CompetitionsCardProps {
   id?: string;
@@ -52,6 +55,7 @@ const CompetitionsCard = ({
   currentTicketNumber,
 }: CompetitionsCardProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [, setShouldRefetch] = useRecoilState(shouldRefetchAtom);
   const [isAdmin] = useRecoilState(isAdminAtom);
   const toast = useToast();
   const { data, isLoading, error, loadData } = useAxios({
@@ -69,6 +73,7 @@ const CompetitionsCard = ({
     }
     if (data) {
       displayToast({ type: "success", text: "Competition deleted.", toast });
+      setShouldRefetch(true);
     }
   }, [error, data]);
 

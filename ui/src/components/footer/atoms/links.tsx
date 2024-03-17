@@ -20,6 +20,7 @@ const FooterLinks = ({ isTablet }: FooterLinksProps) => {
       py={4}
       flexDir={isTablet ? "column" : "row"}
       gap={4}
+      px={4}
     >
       <Flex
         order={isTablet ? 2 : 1}

@@ -9,6 +9,7 @@ export const PagesURL = {
   TOS: "/tos",
   PRIVACY: "/privacy",
   FAQS: "/faqs",
+  PAYMENT_SUCCESS: "/success",
 };
 
 export const SocialLinks = {
