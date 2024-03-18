@@ -1,16 +1,55 @@
-import { Button, Divider, Flex, Text } from "@chakra-ui/react";
+import { Button, Divider, Flex, Text, useToast } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../core/cart.context";
+import { useRecoilState } from "recoil";
+import { cartItemsAtom } from "../utils/cart.recoil";
+import { Checkout } from "../core/cart.service";
+import useAxios from "../../../lib/axios/useAxios";
+import { displayToast } from "../../ui/toast";
 
 const CartSummary = () => {
   const cart = useContext(CartContext);
+  const [cartItems] = useRecoilState(cartItemsAtom);
   const [totalCost, setTotalCost] = useState<any>(0);
   const [totalTickets, setTotalTickets] = useState<any>(0);
+  const toast = useToast();
+
+  const { data, error, loadData } = useAxios({
+    fetchFn: Checkout,
+    paramsOfFetch: {},
+  });
 
   useEffect(() => {
     setTotalCost(cart.getTotalCost());
     setTotalTickets(cart.getTotalTickets());
   }, [cart]);
+
+  const handleCheckout = () => {
+    const itms = cartItems.map((item) => {
+      return {
+        competitionId: item.id,
+        quantity: item.amount,
+      };
+    });
+    const cartObj = {
+      items: itms,
+      currency: "GBP",
+    };
+    console.log(cartObj);
+    loadData({ body: cartObj });
+  };
+
+  useEffect(() => {
+    if (data) {
+      location.href = data;
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      displayToast({ type: "error", text: "Something went wrong.", toast });
+    }
+  }, [error]);
 
   return (
     <>
@@ -43,6 +82,7 @@ const CartSummary = () => {
             color={"black"}
             mt={4}
             _hover={{ borderColor: "white" }}
+            onClick={handleCheckout}
           >
             Checkout
           </Button>

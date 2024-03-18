@@ -11,6 +11,7 @@ import { TOSPage } from "./tos";
 import { FAQsPage } from "./faqs";
 import { PrivacyPolicyPage } from "./privacy";
 import { PaymentSuccessPage } from "./payment-success";
+import { ParticipantsPage } from "./participants";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,11 @@ export const router = createBrowserRouter([
   {
     path: PagesURL.PAYMENT_SUCCESS,
     element: <PaymentSuccessPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PagesURL.PARTICIPANTS,
+    element: <ParticipantsPage />,
     errorElement: <ErrorPage />,
   },
 ]);

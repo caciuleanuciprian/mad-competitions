@@ -15,14 +15,17 @@ import {
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import useAxios from "../../lib/axios/useAxios";
 import { ICONS_SIZE_SMALL } from "../../lib/consts";
 import { CartContext } from "../cart/core/cart.context";
 import Footer from "../footer/footer.organism";
 import { LinkIDS } from "../navigation/utils/consts";
-import { currentActivePageAtom } from "../navigation/utils/navigation.recoil";
+import {
+  currentActivePageAtom,
+  isAdminAtom,
+} from "../navigation/utils/navigation.recoil";
 import ProductCarousel from "../ui/carousel";
 import { FeaturedCompetitions } from "../ui/features-competitions";
 import Header from "../ui/header";
@@ -41,6 +44,7 @@ const CompetitionDetails = () => {
   const [, setIsActive] = useRecoilState(currentActivePageAtom);
   const toast = useToast();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [questionAnswer, setQuestionAnswer] = useState("");
   const [sliderValue, setSliderValue] = useState(20);
@@ -49,11 +53,17 @@ const CompetitionDetails = () => {
   const [isTablet] = useMediaQuery("(min-width: 768px)", { ssr: false });
   const [isDesktop] = useMediaQuery("(min-width: 1200px)", { ssr: false });
 
+  const [isAdmin] = useRecoilState(isAdminAtom);
+
   const { data, isLoading, error } = useAxios({
     fetchFn: GetCompetitionById,
     paramsOfFetch: { id: id },
     loadOnMount: true,
   });
+
+  const showParticipants = () => {
+    navigate(`/competitions/${id}/participants`);
+  };
 
   useEffect(() => {
     setIsActive(LinkIDS.COMPETITIONS);
@@ -189,6 +199,28 @@ const CompetitionDetails = () => {
                     px={0}
                   />
                 </Flex>
+                {isAdmin && (
+                  <Flex>
+                    <Button
+                      variant={"solid"}
+                      background={"green.400"}
+                      size={"lg"}
+                      color={"white"}
+                      textAlign={"left"}
+                      textTransform={"uppercase"}
+                      border={"2px solid white"}
+                      h={"50px"}
+                      _hover={{
+                        background: "green.400",
+                        outline: "0px",
+                        border: "2px solid white",
+                      }}
+                      onClick={showParticipants}
+                    >
+                      <Text fontSize={"lg"}>Show Participants</Text>
+                    </Button>
+                  </Flex>
+                )}
               </Flex>
             </Flex>
           </Flex>

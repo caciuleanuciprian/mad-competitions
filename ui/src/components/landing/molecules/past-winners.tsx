@@ -28,7 +28,7 @@ export const PastWinners = () => {
     width: isDesktop
       ? "1500px"
       : isTablet
-      ? "1200px"
+      ? "768px"
       : isMobile
       ? "400px"
       : "100%",
@@ -48,7 +48,7 @@ export const PastWinners = () => {
     <Flex
       width={"100%"}
       maxWidth={
-        isDesktop ? "1500px" : isTablet ? "1200px" : isMobile ? "400px" : "100%"
+        isDesktop ? "1500px" : isTablet ? "768px" : isMobile ? "400px" : "100%"
       }
       margin={"0 auto"}
       h={"100%"}

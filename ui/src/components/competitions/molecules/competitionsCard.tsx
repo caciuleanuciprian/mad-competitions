@@ -88,13 +88,22 @@ const CompetitionsCard = ({
         body="Are you sure you want to delete this competition? You will not be able to recover it after it's gone."
       />
       {isAdmin && <DeleteBtn onClick={onOpen} />}
-      <Image
-        borderTopRadius={"md"}
-        src={images[0]}
-        alt="giveaway-picture"
+      <Flex
         w={"100%"}
-        h={"50%"}
-      />
+        h={"35%"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        p={3}
+        pb={0}
+      >
+        <Image
+          borderRadius={"md"}
+          src={images[0]}
+          alt="giveaway-picture"
+          w={"100%"}
+          h={"100%"}
+        />
+      </Flex>
       <Banner endTime={endTime} />
       <Timer endTime={endTime} />
       <ProgressBar

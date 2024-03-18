@@ -5,6 +5,11 @@ interface AlternativeProps {
 }
 
 const Alternative = ({ alternative }: AlternativeProps) => {
+  let GBPDollar = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+    minimumFractionDigits: 0,
+  });
   return (
     <Flex
       bg={"green.100"}
@@ -17,7 +22,7 @@ const Alternative = ({ alternative }: AlternativeProps) => {
       fontSize={"xs"}
       borderRadius={"md"}
     >
-      <Text>{`Cash Alternative: $${alternative}`}</Text>
+      <Text>{`Cash Alternative: ${GBPDollar.format(alternative)}`}</Text>
     </Flex>
   );
 };

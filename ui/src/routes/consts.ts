@@ -10,6 +10,7 @@ export const PagesURL = {
   PRIVACY: "/privacy",
   FAQS: "/faqs",
   PAYMENT_SUCCESS: "/success",
+  PARTICIPANTS: "/competitions/:id/participants",
 };
 
 export const SocialLinks = {

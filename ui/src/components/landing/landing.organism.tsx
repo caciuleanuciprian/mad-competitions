@@ -56,7 +56,8 @@ export const Landing = () => {
   return (
     <Flex flexDir={"column"}>
       <Flex
-        h={"92vh"}
+        h={isTablet ? "92vh" : "auto"}
+        maxH={"92vh"}
         alignItems={"center"}
         justifyContent={"center"}
         w={"100%"}

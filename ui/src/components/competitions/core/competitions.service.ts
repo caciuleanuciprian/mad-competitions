@@ -106,3 +106,16 @@ export const DeleteCompetition = async ({
     return handleError(error);
   }
 };
+
+export const GetParticipants = async ({
+  id,
+}: {
+  id: string;
+}): Promise<any | DefaultErrorResult | AxiosResponse<any, any>> => {
+  try {
+    const response: any = axios.get(`${COMPETITIONS_URL}/${id}/participants`);
+    return response;
+  } catch (error) {
+    return handleError(error);
+  }
+};

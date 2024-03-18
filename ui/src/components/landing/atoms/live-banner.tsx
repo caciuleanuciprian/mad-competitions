@@ -12,7 +12,7 @@ export const LiveBanner = () => {
   return (
     <Flex
       w={"100%"}
-      h={"32"}
+      h={isTablet ? "16" : "32"}
       justifyContent={"space-evenly"}
       alignItems={"center"}
       bg={"gray.800"}
