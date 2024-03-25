@@ -1,5 +1,11 @@
-import { Button, Flex, Text, useMediaQuery } from "@chakra-ui/react";
-import { Formiz, useForm } from "@formiz/core";
+import {
+  Button,
+  Flex,
+  Spinner,
+  useMediaQuery,
+  useToast,
+} from "@chakra-ui/react";
+import { Formiz, useForm, useFormFields } from "@formiz/core";
 import InputField from "../components/ui/forms/inputField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -9,10 +15,54 @@ import { ICONS_SIZE } from "../lib/consts";
 import Header from "../components/ui/header";
 import Footer from "../components/footer/footer.organism";
 import Logo from "../components/ui/logo";
+import { Login } from "../components/competitions/core/competitions.service";
+import useAxios from "../lib/axios/useAxios";
+import { useEffect } from "react";
+import { displayToast } from "../components/ui/toast";
+import { useRecoilState } from "recoil";
+import { tokenAtom } from "../components/navigation/utils/navigation.recoil";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const toast = useToast();
   const [isMobile] = useMediaQuery("(max-width: 768px)");
   const loginForm = useForm();
+  const [, setToken] = useRecoilState(tokenAtom);
+  const navigate = useNavigate();
+
+  const values = useFormFields({
+    connect: loginForm,
+    selector: (field) => field.value,
+  });
+
+  const { data, isLoading, error, loadData } = useAxios({
+    fetchFn: Login,
+    paramsOfFetch: { username: values.username, password: values.password },
+  });
+
+  const handleLogin = () => {
+    loadData({ username: values.username, password: values.password });
+  };
+
+  useEffect(() => {
+    if (error) {
+      displayToast({
+        type: "error",
+        text: "Invalid credentials.",
+        toast,
+      });
+    }
+    if (data) {
+      displayToast({
+        type: "success",
+        text: "Login successful.",
+        toast,
+      });
+      setToken({ token: data, expiresIn: Date.now() + 60 * 60 * 1000 });
+      navigate("/");
+    }
+  }, [data, error]);
+
   return (
     <Page>
       <Header title="Login" />
@@ -37,13 +87,23 @@ const LoginPage = () => {
               name="username"
               type="text"
               leftEl={<FontAwesomeIcon fontSize={ICONS_SIZE} icon={faUser} />}
+              placeholder="Username"
+              isReadonly={isLoading}
             />
             <InputField
               name="password"
               type="password"
               leftEl={<FontAwesomeIcon fontSize={ICONS_SIZE} icon={faLock} />}
+              placeholder="Password"
+              isReadonly={isLoading}
             />
-            <Button>Login</Button>
+            <Button
+              onClick={handleLogin}
+              isDisabled={isLoading}
+              _hover={{ color: "black", bg: "white", borderColor: "white" }}
+            >
+              {isLoading ? <Spinner /> : `Login`}
+            </Button>
           </Flex>
         </Formiz>
       </Flex>

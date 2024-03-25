@@ -11,7 +11,7 @@ const Contact = () => {
       margin={"0 auto"}
       h={"100%"}
       minH={"55vh"}
-      my={8}
+      my={7}
       justifyContent={"center"}
       alignItems={"flex-start"}
       bg={"gray.900"}

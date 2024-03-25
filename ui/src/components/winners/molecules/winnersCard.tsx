@@ -1,12 +1,20 @@
-import { Image, useDisclosure } from "@chakra-ui/react";
+import { Image, useDisclosure, useToast } from "@chakra-ui/react";
 import WinnersName from "../atoms/winnersName";
 import WinnersPrize from "../atoms/winnersPrize";
 import WinnersTicket from "../atoms/winnersTicket";
 import Card from "../../ui/card/card";
 import { DeleteBtn } from "../../ui/card/deleteBtn";
 import { useRecoilState } from "recoil";
-import { isAdminAtom } from "../../navigation/utils/navigation.recoil";
+import {
+  isAdminAtom,
+  shouldRefetchWinnerAtom,
+  tokenAtom,
+} from "../../navigation/utils/navigation.recoil";
 import { BasicModal } from "../../ui/modal";
+import useAxios from "../../../lib/axios/useAxios";
+import { DeleteWinner } from "../core/winners.service";
+import { useEffect } from "react";
+import { displayToast } from "../../ui/toast";
 
 interface WinnersCardProps {
   competitionName: string;
@@ -14,6 +22,7 @@ interface WinnersCardProps {
   name: string;
   ticketNumber: string;
   width?: string;
+  id: string;
 }
 
 const WinnersCard = ({
@@ -22,11 +31,40 @@ const WinnersCard = ({
   name,
   ticketNumber,
   width,
+  id,
 }: WinnersCardProps) => {
   const [isAdmin] = useRecoilState(isAdminAtom);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const handleDelete = () => {};
-  const isLoading = false;
+  const [token] = useRecoilState(tokenAtom);
+  const toast = useToast();
+  const [shouldRefetchWinner, setShouldRefetchWinner] = useRecoilState(
+    shouldRefetchWinnerAtom
+  );
+  const { data, isLoading, error, loadData } = useAxios({
+    fetchFn: DeleteWinner,
+    paramsOfFetch: { id: id, token: token.token },
+  });
+
+  const handleDelete = async () => {
+    await loadData();
+  };
+
+  useEffect(() => {
+    if (data) {
+      displayToast({ type: "success", text: "Winner deleted.", toast });
+    }
+    if (error) {
+      displayToast({ type: "error", text: "Something went wrong.", toast });
+    }
+  }, [error, data]);
+
+  useEffect(() => {
+    if (shouldRefetchWinner) {
+      loadData();
+      setShouldRefetchWinner(false);
+    }
+  }, [shouldRefetchWinner]);
+
   return (
     <Card bg={"gray.900"} hover={""} width={width}>
       <BasicModal

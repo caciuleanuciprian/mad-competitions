@@ -61,6 +61,7 @@ const Winners = () => {
           data?.winners?.map((card: any, index: number) => (
             <WinnersCard
               key={`${card.id}-${index}`}
+              id={card.id}
               competitionName={card.competitionName}
               image={card.image}
               name={card.name}

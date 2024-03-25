@@ -5,5 +5,5 @@ import { localStorageEffect } from "../../../lib/recoil/persistAtom";
 export const cartItemsAtom = atom({
   key: "cartItems",
   default: [] as unknown as CartItemProps[],
-  effects: [localStorageEffect("cartItemsAtomLocalStorage")],
+  effects: [localStorageEffect("cartItems")],
 });

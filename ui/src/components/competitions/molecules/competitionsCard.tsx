@@ -26,6 +26,7 @@ import { useRecoilState } from "recoil";
 import {
   isAdminAtom,
   shouldRefetchAtom,
+  tokenAtom,
 } from "../../navigation/utils/navigation.recoil";
 
 interface CompetitionsCardProps {
@@ -58,9 +59,10 @@ const CompetitionsCard = ({
   const [, setShouldRefetch] = useRecoilState(shouldRefetchAtom);
   const [isAdmin] = useRecoilState(isAdminAtom);
   const toast = useToast();
+  const [token] = useRecoilState(tokenAtom);
   const { data, isLoading, error, loadData } = useAxios({
     fetchFn: DeleteCompetition,
-    paramsOfFetch: { id: id },
+    paramsOfFetch: { id: id, token: token.token },
   });
 
   const handleDelete = async () => {

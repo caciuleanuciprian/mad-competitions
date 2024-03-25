@@ -15,6 +15,7 @@ import useAxios from "../../../lib/axios/useAxios";
 import { AddWinner } from "../core/winners.service";
 import { useEffect } from "react";
 import { displayToast } from "../../ui/toast";
+import { tokenAtom } from "../../navigation/utils/navigation.recoil";
 
 interface AddWinnerFormProps {
   onClose: () => void;
@@ -24,6 +25,7 @@ const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
   const toast = useToast();
   const addWinnerForm = useForm();
   const [fileToUpload, setFileToUpload] = useRecoilState(fileToUploadAtom);
+  const [token] = useRecoilState(tokenAtom);
 
   const values = useFormFields({
     connect: addWinnerForm,
@@ -37,6 +39,7 @@ const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
       competitionName: values.competition,
       ticketNumber: values.ticketNumber,
       file: fileToUpload,
+      token: token.token,
     },
   });
 

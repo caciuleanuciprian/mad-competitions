@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { localStorageEffect } from "../../../lib/recoil/persistAtom";
 
 export const currentActivePageAtom = atom({
   key: "currentActivePage",
@@ -7,10 +8,21 @@ export const currentActivePageAtom = atom({
 
 export const isAdminAtom = atom({
   key: "isAdmin",
-  default: true,
+  default: false,
+});
+
+export const tokenAtom = atom({
+  key: "token",
+  default: { token: null, expiresIn: 0 },
+  effects: [localStorageEffect("idToken")],
 });
 
 export const shouldRefetchAtom = atom({
   key: "shouldRefetch",
+  default: false,
+});
+
+export const shouldRefetchWinnerAtom = atom({
+  key: "shouldRefetchWinner",
   default: false,
 });

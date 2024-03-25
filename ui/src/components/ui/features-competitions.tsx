@@ -14,6 +14,8 @@ import { displayToast } from "./toast";
 //@ts-ignore
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Options } from "@splidejs/splide";
+import { useRecoilState } from "recoil";
+import { shouldRefetchAtom } from "../navigation/utils/navigation.recoil";
 
 interface FeaturedCompetitionsProps {
   tag?: string;
@@ -21,7 +23,8 @@ interface FeaturedCompetitionsProps {
 
 export const FeaturedCompetitions = ({ tag }: FeaturedCompetitionsProps) => {
   const toast = useToast();
-  const { data, isLoading, error } = useAxios({
+  const [shouldRefetch, setShouldRefetch] = useRecoilState(shouldRefetchAtom);
+  const { data, isLoading, error, loadData } = useAxios({
     fetchFn: GetCompetitions,
     paramsOfFetch: {
       page: 0,
@@ -42,6 +45,13 @@ export const FeaturedCompetitions = ({ tag }: FeaturedCompetitionsProps) => {
       displayToast({ type: "error", text: "Something went wrong.", toast });
     }
   }, [error]);
+
+  useEffect(() => {
+    if (shouldRefetch) {
+      loadData();
+      setShouldRefetch(false);
+    }
+  }, [shouldRefetch]);
 
   const thumbsOptions: Options = {
     type: "loop",

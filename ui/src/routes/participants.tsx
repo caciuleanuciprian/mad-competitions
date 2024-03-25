@@ -7,13 +7,16 @@ import useAxios from "../lib/axios/useAxios";
 import { GetParticipants } from "../components/competitions/core/competitions.service";
 import { useEffect } from "react";
 import { displayToast } from "../components/ui/toast";
+import { tokenAtom } from "../components/navigation/utils/navigation.recoil";
+import { useRecoilState } from "recoil";
 
 export const ParticipantsPage = () => {
   const toast = useToast();
   const { id } = useParams();
+  const [token] = useRecoilState(tokenAtom);
   const { data, error } = useAxios({
     fetchFn: GetParticipants,
-    paramsOfFetch: { id: id },
+    paramsOfFetch: { id: id, token: token.token },
     loadOnMount: true,
   });
 

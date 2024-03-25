@@ -12,11 +12,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { PagesURL } from "./consts";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { cartItemsAtom } from "../components/cart/utils/cart.recoil";
 
 export const PaymentSuccessPage = () => {
   const [isTablet] = useMediaQuery("(min-width: 768px)", { ssr: false });
   const [isDesktop] = useMediaQuery("(min-width: 1500px)", { ssr: false });
   const navigate = useNavigate();
+  const [, setCartItems] = useRecoilState(cartItemsAtom);
+
+  useEffect(() => {
+    setCartItems([]);
+  }, []);
   return (
     <Page>
       <Header title="Payment Success" />
@@ -31,7 +39,7 @@ export const PaymentSuccessPage = () => {
         alignItems={"center"}
         gap={8}
         py={8}
-        h={"57vh"}
+        h={"59vh"}
       >
         <FontAwesomeIcon icon={faCheckCircle} size={"4x"} color={"green"} />
         <Text fontSize={"2xl"} textAlign={"center"} fontWeight={"bold"}>

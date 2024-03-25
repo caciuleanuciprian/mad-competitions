@@ -25,7 +25,10 @@ import useAxios from "../../../lib/axios/useAxios";
 import { AddCompetition } from "../core/competitions.service";
 import { UploadImage } from "../../ui/forms/imageUpload";
 import { displayToast } from "../../ui/toast";
-import { shouldRefetchAtom } from "../../navigation/utils/navigation.recoil";
+import {
+  shouldRefetchAtom,
+  tokenAtom,
+} from "../../navigation/utils/navigation.recoil";
 
 interface AddCompetitionFormProps {
   onClose: () => void;
@@ -35,6 +38,7 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
   const toast = useToast();
   const [, setShouldRefetch] = useRecoilState(shouldRefetchAtom);
   const addCompetitionForm = useForm();
+  const [token] = useRecoilState(tokenAtom);
 
   const values = useFormFields({
     connect: addCompetitionForm,
@@ -69,6 +73,7 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
       images: fileToUpload &&
         // @ts-ignore
         filesToUpload && [fileToUpload[0], ...filesToUpload],
+      token: token.token,
     },
   });
 

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { DefaultErrorResult, handleError } from "../../../lib/axios/helpers";
-import { COMPETITIONS_URL } from "../../../lib/axios/consts";
+import { COMPETITIONS_URL, LOGIN_URL } from "../../../lib/axios/consts";
 
 export const GetCompetitions = async ({
   page = 0,
@@ -51,6 +51,7 @@ export const AddCompetition = async ({
   pricePerTicket,
   maxNumberOfTickets,
   images,
+  token,
 }: {
   title: string;
   description: string;
@@ -67,6 +68,7 @@ export const AddCompetition = async ({
   pricePerTicket: string;
   maxNumberOfTickets: string;
   images: File[];
+  token: string;
 }): Promise<any | DefaultErrorResult | AxiosResponse<any, any>> => {
   const formData = new FormData();
   images.forEach((image) => {
@@ -86,7 +88,10 @@ export const AddCompetition = async ({
   formData.append("maxNumberOfTickets", maxNumberOfTickets);
   try {
     const response: any = axios.post(`${COMPETITIONS_URL}`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
     });
     return response;
   } catch (error) {
@@ -96,11 +101,17 @@ export const AddCompetition = async ({
 
 export const DeleteCompetition = async ({
   id,
+  token,
 }: {
   id: string;
+  token: string;
 }): Promise<any | DefaultErrorResult | AxiosResponse<any, any>> => {
   try {
-    const response: any = axios.delete(`${COMPETITIONS_URL}/${id}`);
+    const response: any = axios.delete(`${COMPETITIONS_URL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response;
   } catch (error) {
     return handleError(error);
@@ -109,11 +120,33 @@ export const DeleteCompetition = async ({
 
 export const GetParticipants = async ({
   id,
+  token,
 }: {
   id: string;
+  token: string;
 }): Promise<any | DefaultErrorResult | AxiosResponse<any, any>> => {
   try {
-    const response: any = axios.get(`${COMPETITIONS_URL}/${id}/participants`);
+    const response: any = axios.get(`participants/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const Login = async ({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}): Promise<any | DefaultErrorResult | AxiosResponse<any, any>> => {
+  try {
+    const response: any = axios.post(`${LOGIN_URL}`, {
+      username: username,
+      password: password,
+    });
     return response;
   } catch (error) {
     return handleError(error);

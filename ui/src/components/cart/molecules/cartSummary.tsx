@@ -35,7 +35,6 @@ const CartSummary = () => {
       items: itms,
       currency: "GBP",
     };
-    console.log(cartObj);
     loadData({ body: cartObj });
   };
 
