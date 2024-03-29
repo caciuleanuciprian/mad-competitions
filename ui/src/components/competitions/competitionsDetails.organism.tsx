@@ -72,6 +72,7 @@ const CompetitionDetails = () => {
   const handleAddToCart = () => {
     if (!questionAnswer) {
       displayToast({
+        id: "competitionsQuestion",
         type: "info",
         text: "You must answer the question before adding to cart.",
         toast,
@@ -87,6 +88,7 @@ const CompetitionDetails = () => {
       questionAnswer
     );
     displayToast({
+      id: "competitionsSuccess",
       type: "success",
       text: `Added tickets to cart.`,
       toast,

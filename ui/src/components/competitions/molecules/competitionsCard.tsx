@@ -71,10 +71,20 @@ const CompetitionsCard = ({
 
   useEffect(() => {
     if (error) {
-      displayToast({ type: "error", text: "Something went wrong.", toast });
+      displayToast({
+        id: "competitionsError",
+        type: "error",
+        text: "There was a problem deleting the competition. Please try again later or contact the administrator.",
+        toast,
+      });
     }
     if (data) {
-      displayToast({ type: "success", text: "Competition deleted.", toast });
+      displayToast({
+        id: "competitionsDeletedSuccess",
+        type: "success",
+        text: "Competition deleted successfully.",
+        toast,
+      });
       setShouldRefetch(true);
     }
   }, [error, data]);

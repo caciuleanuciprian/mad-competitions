@@ -47,15 +47,17 @@ const LoginPage = () => {
   useEffect(() => {
     if (error) {
       displayToast({
+        id: "loginError",
         type: "error",
-        text: "Invalid credentials.",
+        text: "The username or password is incorrect. Please try again.",
         toast,
       });
     }
     if (data) {
       displayToast({
+        id: "loginSuccess",
         type: "success",
-        text: "Login successful.",
+        text: "Login successful. You will be redirected to the homepage.",
         toast,
       });
       setToken({ token: data, expiresIn: Date.now() + 60 * 60 * 1000 });

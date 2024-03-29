@@ -39,7 +39,12 @@ const Winners = () => {
 
   useEffect(() => {
     if (error) {
-      displayToast({ type: "error", text: "Something went wrong.", toast });
+      displayToast({
+        id: "winnersError",
+        type: "error",
+        text: "There was a problem retrieving the winners. Please try again later.",
+        toast,
+      });
     }
   }, [error]);
 

@@ -97,6 +97,7 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
       onClose();
       resetForm();
       displayToast({
+        id: "addCompetitionSuccess",
         type: "success",
         text: "Competition added successfully.",
         toast,
@@ -104,7 +105,12 @@ const AddCompetitionForm = ({ onClose }: AddCompetitionFormProps) => {
       setShouldRefetch(true);
     }
     if (error) {
-      displayToast({ type: "error", text: "Something went wrong.", toast });
+      displayToast({
+        id: "competitionsError",
+        type: "error",
+        text: "There was a problem adding the competition. Please try again later or contact the administrator.",
+        toast,
+      });
     }
   }, [data, error]);
 

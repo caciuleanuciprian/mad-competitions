@@ -19,11 +19,17 @@ const ContactForm = ({ order }: ContactFormProps) => {
   const toast = useToast();
   const submit = useSubmit("mvoeqdgz", {
     onError: (_e) =>
-      displayToast({ type: "error", text: "Message failed to send", toast }),
+      displayToast({
+        id: "contactError",
+        type: "error",
+        text: "There was an error sending the message. Please try again or use a different communication channel.",
+        toast,
+      }),
     onSuccess: (_e) =>
       displayToast({
+        id: "contactSuccess",
         type: "success",
-        text: "Message sent successfully",
+        text: "Your message has been sent successfully. We will get back to you as soon as possible.",
         toast,
       }),
   });

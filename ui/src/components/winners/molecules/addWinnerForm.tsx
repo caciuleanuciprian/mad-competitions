@@ -51,6 +51,7 @@ const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
   useEffect(() => {
     if (data) {
       displayToast({
+        id: "winnersSuccess",
         type: "success",
         text: "Winner added successfully.",
         toast,
@@ -58,7 +59,12 @@ const AddWinnerForm = ({ onClose }: AddWinnerFormProps) => {
       onClose();
     }
     if (error) {
-      displayToast({ type: "error", text: "Something went wrong.", toast });
+      displayToast({
+        id: "winnersError",
+        type: "error",
+        text: "There was a problem adding the winner. Please try again later or contact the administrator.",
+        toast,
+      });
     }
   }, [error, data]);
 

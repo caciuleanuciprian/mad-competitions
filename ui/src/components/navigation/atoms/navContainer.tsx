@@ -10,6 +10,8 @@ const NavContainer = ({ children }: any) => {
       px={6}
       bg={"black"}
       minH={"80px"}
+      borderBottom={"4px solid"}
+      borderColor={"gray.900"}
     >
       {children}
     </Flex>

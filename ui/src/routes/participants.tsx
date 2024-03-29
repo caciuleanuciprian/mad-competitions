@@ -22,7 +22,12 @@ export const ParticipantsPage = () => {
 
   useEffect(() => {
     if (error) {
-      displayToast({ type: "error", text: "Something went wrong.", toast });
+      displayToast({
+        id: "participantsError",
+        type: "error",
+        text: "There was a problem retrieving the participants. Please try again later or contact the administrator.",
+        toast,
+      });
     }
   }, [error]);
   return (

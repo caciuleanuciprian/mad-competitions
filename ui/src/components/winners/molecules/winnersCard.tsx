@@ -51,10 +51,20 @@ const WinnersCard = ({
 
   useEffect(() => {
     if (data) {
-      displayToast({ type: "success", text: "Winner deleted.", toast });
+      displayToast({
+        id: "winnersDeletedSuccess",
+        type: "success",
+        text: "Winner deleted successfully.",
+        toast,
+      });
     }
     if (error) {
-      displayToast({ type: "error", text: "Something went wrong.", toast });
+      displayToast({
+        id: "winnersError",
+        type: "error",
+        text: "There was a problem deleting the winner. Please try again later or contact the administrator.",
+        toast,
+      });
     }
   }, [error, data]);
 

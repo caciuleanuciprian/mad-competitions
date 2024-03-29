@@ -2,12 +2,16 @@ interface ToastProps {
   type: "success" | "error" | "warning" | "info";
   text: string;
   toast: any;
+  id: string;
 }
 
-export const displayToast = ({ type, text, toast }: ToastProps) => {
+export const displayToast = ({ type, text, toast, id }: ToastProps) => {
+  if (toast.isActive(id)) return;
+
   switch (type) {
     case "success":
       toast({
+        id: id,
         title: "Success",
         description: text,
         status: "success",
@@ -17,6 +21,7 @@ export const displayToast = ({ type, text, toast }: ToastProps) => {
       break;
     case "error":
       toast({
+        id: id,
         title: "Error",
         description: text,
         status: "error",
@@ -26,6 +31,7 @@ export const displayToast = ({ type, text, toast }: ToastProps) => {
       break;
     case "warning":
       toast({
+        id: id,
         title: "Warning",
         description: text,
         status: "warning",
@@ -35,6 +41,7 @@ export const displayToast = ({ type, text, toast }: ToastProps) => {
       break;
     case "info":
       toast({
+        id: id,
         title: "Info",
         description: text,
         status: "info",

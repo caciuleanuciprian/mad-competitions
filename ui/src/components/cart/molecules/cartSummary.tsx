@@ -46,7 +46,12 @@ const CartSummary = () => {
 
   useEffect(() => {
     if (error) {
-      displayToast({ type: "error", text: "Something went wrong.", toast });
+      displayToast({
+        id: "cartError",
+        type: "error",
+        text: "There was a problem with your checkout. Please try again.",
+        toast,
+      });
     }
   }, [error]);
 
