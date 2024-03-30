@@ -15,6 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  background-color: black;
+  min-width: 340px;
+}
+
 #root {
   width: 100%;
 }

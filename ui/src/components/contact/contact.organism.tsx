@@ -17,6 +17,7 @@ const Contact = () => {
       bg={"gray.900"}
       borderRadius={"md"}
       flexDir={!isTablet ? "column" : "row"}
+      minW={"340px"}
     >
       <ContactForm order={!isTablet ? 2 : 1} />
       <ContactDetails order={!isTablet ? 1 : 2} />

@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { useRecoilState } from "recoil";
 import { cartItemsAtom } from "../utils/cart.recoil";
+import { MAX_TICKET_NUMBER } from "../../../lib/consts";
 
 export const CartContext = createContext({
   items: [],
@@ -22,8 +23,6 @@ export const CartContext = createContext({
   modifiyQuantity: (_id: string, _amount: number) => {},
 });
 
-const MAX_TICKETS_PER_CUSTOMER = 50;
-
 export function CartProvider({ children }: any) {
   const [cartProducts, setCartProducts] = useRecoilState(cartItemsAtom);
   function getProductQuantity(id: string) {
@@ -38,11 +37,11 @@ export function CartProvider({ children }: any) {
   function modifiyQuantity(id: string, amount: number) {
     const quantity = getProductQuantity(id);
 
-    if (Number(quantity) + Number(amount) > MAX_TICKETS_PER_CUSTOMER) {
+    if (Number(quantity) + Number(amount) > MAX_TICKET_NUMBER) {
       setCartProducts(
         cartProducts.map((product) =>
           product.id === id
-            ? { ...product, amount: Number(MAX_TICKETS_PER_CUSTOMER) }
+            ? { ...product, amount: Number(MAX_TICKET_NUMBER) }
             : product
         )
       );
@@ -65,11 +64,11 @@ export function CartProvider({ children }: any) {
   ) {
     const quantity = getProductQuantity(id);
 
-    if (Number(quantity) + Number(amount) > MAX_TICKETS_PER_CUSTOMER) {
+    if (Number(quantity) + Number(amount) > MAX_TICKET_NUMBER) {
       setCartProducts(
         cartProducts.map((product) =>
           product.id === id
-            ? { ...product, amount: Number(MAX_TICKETS_PER_CUSTOMER) }
+            ? { ...product, amount: Number(MAX_TICKET_NUMBER) }
             : product
         )
       );
@@ -106,11 +105,11 @@ export function CartProvider({ children }: any) {
   ) {
     const quantity = getProductQuantity(id);
 
-    if (Number(quantity) + Number(amount) > MAX_TICKETS_PER_CUSTOMER) {
+    if (Number(quantity) + Number(amount) > MAX_TICKET_NUMBER) {
       setCartProducts(
         cartProducts.map((product) =>
           product.id === id
-            ? { ...product, amount: Number(MAX_TICKETS_PER_CUSTOMER) }
+            ? { ...product, amount: Number(MAX_TICKET_NUMBER) }
             : product
         )
       );

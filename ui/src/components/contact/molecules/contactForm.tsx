@@ -7,9 +7,10 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ICONS_SIZE_SMALL } from "../../../lib/consts";
+import { ICONS_SIZE_SMALL, ReCAPTCHA_KEY } from "../../../lib/consts";
 import { useSubmit } from "@formspree/react";
 import { displayToast } from "../../ui/toast";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface ContactFormProps {
   order: number;
@@ -55,7 +56,6 @@ const ContactForm = ({ order }: ContactFormProps) => {
             w={"100%"}
             h={"100%"}
             alignItems={"flex-end"}
-            p={4}
           >
             <Flex flexDir={"column"} w={"100%"}>
               <InputField
@@ -122,29 +122,40 @@ const ContactForm = ({ order }: ContactFormProps) => {
                 ]}
               />
             </Flex>
-            <ButtonGroup>
-              <Button
-                variant={"outline"}
-                color={"white"}
-                _hover={{ color: "black", bg: "white", borderColor: "white" }}
-                onClick={() => {
-                  form.submit();
-                  form.reset();
-                }}
-              >
-                Submit
-              </Button>
-              <Button
-                variant={"solid"}
-                _hover={{ borderColor: "white" }}
-                onClick={() => form.reset()}
-              >
-                Clear
-              </Button>
-            </ButtonGroup>
           </Flex>
         }
       />
+      <Flex
+        w={"100%"}
+        flexDir={"column"}
+        gap={4}
+        alignItems={"flex-end"}
+        pt={4}
+      >
+        <Flex>
+          <ReCAPTCHA sitekey={ReCAPTCHA_KEY} />
+        </Flex>
+        <ButtonGroup>
+          <Button
+            variant={"outline"}
+            color={"white"}
+            _hover={{ color: "black", bg: "white", borderColor: "white" }}
+            onClick={() => {
+              form.submit();
+              form.reset();
+            }}
+          >
+            Submit
+          </Button>
+          <Button
+            variant={"solid"}
+            _hover={{ borderColor: "white" }}
+            onClick={() => form.reset()}
+          >
+            Clear
+          </Button>
+        </ButtonGroup>
+      </Flex>
     </Flex>
   );
 };

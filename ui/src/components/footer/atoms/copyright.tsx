@@ -14,6 +14,7 @@ const Copyright = ({ isTablet }: CopyrightProps) => {
       alignItems={"center"}
       flexDir={isTablet ? "column" : "row"}
       px={4}
+      gap={0}
     >
       <Text
         fontSize={"xs"}
@@ -22,8 +23,8 @@ const Copyright = ({ isTablet }: CopyrightProps) => {
         textAlign={"center"}
       >
         Copyright © 2024{" "}
-        <Link to={Links[LinkIDS.HOME].to}>MAD Competitions</Link> | Companies
-        House Number: 123456789
+        <Link to={Links[LinkIDS.HOME].to}>MAD Competitions</Link> by Mad Media
+        Productions LTD | Companies House Number: 15349657
       </Text>
       <Text fontSize={"xs"}>
         Competition Platform by{" "}

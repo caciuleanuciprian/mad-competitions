@@ -5,6 +5,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from "@chakra-ui/react";
+import { MAX_TICKET_NUMBER } from "../../lib/consts";
 
 interface TicketsSliderProps {
   maxNumberOfTickets: number;
@@ -21,9 +22,8 @@ const TicketsSlider = ({
   sliderValue,
   setSliderValue,
   isDisabled,
-  maxPerCustomer = 50,
+  maxPerCustomer = MAX_TICKET_NUMBER,
 }: TicketsSliderProps) => {
-  // TODO Should test this!
   return (
     <Slider
       isDisabled={isDisabled}

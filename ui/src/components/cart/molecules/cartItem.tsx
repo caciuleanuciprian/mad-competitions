@@ -13,7 +13,7 @@ import { CartItemProps } from "../utils/types";
 import { useContext, useState } from "react";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ICONS_SIZE_SMALL } from "../../../lib/consts";
+import { ICONS_SIZE_SMALL, MAX_TICKET_NUMBER } from "../../../lib/consts";
 
 import { CartContext } from "../core/cart.context";
 
@@ -23,7 +23,7 @@ const CartItem = ({
   price,
   img,
   id,
-  maxPerCustomer = 50,
+  maxPerCustomer = MAX_TICKET_NUMBER,
 }: CartItemProps) => {
   const [itemAmount, setItemAmount] = useState<number>(amount);
   const cart = useContext(CartContext);

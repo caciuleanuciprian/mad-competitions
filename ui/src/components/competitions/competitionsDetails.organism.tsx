@@ -18,7 +18,7 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import useAxios from "../../lib/axios/useAxios";
-import { ICONS_SIZE_SMALL } from "../../lib/consts";
+import { ICONS_SIZE_SMALL, MAX_TICKET_NUMBER } from "../../lib/consts";
 import { CartContext } from "../cart/core/cart.context";
 import Footer from "../footer/footer.organism";
 import { LinkIDS } from "../navigation/utils/consts";
@@ -247,7 +247,10 @@ const CompetitionDetails = () => {
                   <Text>{data.description}</Text>
                 </TabPanel>
                 <TabPanel px={0}>
-                  <Rules maxTickets={50} endDate={data.endTime} />
+                  <Rules
+                    maxTickets={MAX_TICKET_NUMBER}
+                    endDate={data.endTime}
+                  />
                 </TabPanel>
                 <TabPanel px={0}>
                   <FAQs endDate={data.endTime} />
