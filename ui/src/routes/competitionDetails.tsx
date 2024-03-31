@@ -3,9 +3,11 @@ import CompetitionDetails from "../components/competitions/competitionsDetails.o
 
 const CompetitionDetailsPage = () => {
   return (
-    <Page>
-      <CompetitionDetails />
-    </Page>
+    <>
+      <Page>
+        <CompetitionDetails />
+      </Page>
+    </>
   );
 };
 

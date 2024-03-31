@@ -1,5 +1,4 @@
 import { Flex, Text, useMediaQuery } from "@chakra-ui/react";
-import Logo from "./logo";
 
 interface HeaderProps {
   title: string;
@@ -24,14 +23,17 @@ const Header = ({ title }: HeaderProps) => {
       <Text
         w={"100%"}
         textAlign={"center"}
-        fontSize={isTablet ? "sm" : "2xl"}
+        fontSize={isTablet ? "lg" : "2xl"}
         color={"white"}
       >
         {title}
       </Text>
-      <Flex w={"100%"} height={"100%"} justifyContent={"flex-end"}>
-        <Logo />
-      </Flex>
+      <Flex
+        w={"100%"}
+        height={"100%"}
+        justifyContent={"flex-end"}
+        opacity={0.125}
+      ></Flex>
     </Flex>
   );
 };

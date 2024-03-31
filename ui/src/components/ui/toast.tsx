@@ -5,6 +5,8 @@ interface ToastProps {
   id: string;
 }
 
+const TOAST_DURATION = 3000;
+
 export const displayToast = ({ type, text, toast, id }: ToastProps) => {
   if (toast.isActive(id)) return;
 
@@ -15,7 +17,7 @@ export const displayToast = ({ type, text, toast, id }: ToastProps) => {
         title: "Success",
         description: text,
         status: "success",
-        duration: 3000,
+        duration: TOAST_DURATION,
         isClosable: true,
       });
       break;
@@ -25,7 +27,7 @@ export const displayToast = ({ type, text, toast, id }: ToastProps) => {
         title: "Error",
         description: text,
         status: "error",
-        duration: 3000,
+        duration: TOAST_DURATION,
         isClosable: true,
       });
       break;
@@ -35,7 +37,7 @@ export const displayToast = ({ type, text, toast, id }: ToastProps) => {
         title: "Warning",
         description: text,
         status: "warning",
-        duration: 3000,
+        duration: TOAST_DURATION,
         isClosable: true,
       });
       break;
@@ -45,7 +47,7 @@ export const displayToast = ({ type, text, toast, id }: ToastProps) => {
         title: "Info",
         description: text,
         status: "info",
-        duration: 3000,
+        duration: TOAST_DURATION,
         isClosable: true,
       });
       break;

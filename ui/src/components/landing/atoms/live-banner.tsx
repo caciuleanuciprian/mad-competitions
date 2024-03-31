@@ -18,6 +18,7 @@ export const LiveBanner = () => {
       bg={"gray.800"}
       mb={8}
       px={4}
+      gap={4}
     >
       <Text color={"white"} fontSize={isTablet ? "md" : "xl"}>
         Watch the Live Draws on our Facebook Page

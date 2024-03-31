@@ -3,19 +3,19 @@ export const PagesURL = {
   COMPETITIONS: "/competitions",
   WINNERS: "/winners",
   CONTACT: "/contact",
-  DASHBOARD: "/dashboard",
   LOGIN: "/login",
   COMPETITION_DETAILS: "/competitions/:id",
-  TOS: "/tos",
+  TOS: "/terms-of-service",
+  TOU: "/terms-of-use",
   PRIVACY: "/privacy",
-  FAQS: "/faqs",
+  COOKIES: "/cookies",
   PAYMENT_SUCCESS: "/success",
   PARTICIPANTS: "/competitions/:id/participants",
 };
 
 export const SocialLinks = {
   FACEBOOK: "https://www.facebook.com/",
-  TWITTER: "https://twitter.com/",
   INSTAGRAM: "https://www.instagram.com/",
-  GMAIL: "test@gmail.com",
+  GMAIL: "info@madproductions.uk",
+  TIKTOK: "https://www.tiktok.com/@madcompetitionsuk",
 };

@@ -1,5 +1,5 @@
 import { Image } from "@chakra-ui/react";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/logo.png";
 
 interface LogoWithoutLinkProps {
   order?: number;
@@ -26,6 +26,7 @@ const Logo = ({
       src={logo}
       alt="logo"
       mr={marginRight ? marginRight : ""}
+      aspectRatio={3.33}
     />
   );
 };

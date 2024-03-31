@@ -92,3 +92,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   top: 0;
   width: auto;
 }
+
+.chakra-toast button {
+  border-color: transparent;
+}

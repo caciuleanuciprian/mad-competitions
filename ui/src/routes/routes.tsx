@@ -8,10 +8,11 @@ import WinnersPage from "./winners";
 import { PagesURL } from "./consts";
 import CompetitionDetailsPage from "./competitionDetails";
 import { TOSPage } from "./tos";
-import { FAQsPage } from "./faqs";
+import { CookiesPage } from "./cookies";
 import { PrivacyPolicyPage } from "./privacy";
 import { PaymentSuccessPage } from "./payment-success";
 import { ParticipantsPage } from "./participants";
+import { TOUPage } from "./tou";
 
 export const router = createBrowserRouter([
   {
@@ -50,8 +51,13 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: PagesURL.FAQS,
-    element: <FAQsPage />,
+    path: PagesURL.TOU,
+    element: <TOUPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: PagesURL.COOKIES,
+    element: <CookiesPage />,
     errorElement: <ErrorPage />,
   },
   {

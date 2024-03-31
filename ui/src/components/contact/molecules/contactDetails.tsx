@@ -2,6 +2,7 @@ import { Flex, Text, useMediaQuery } from "@chakra-ui/react";
 import {
   faFacebook,
   faInstagram,
+  faTiktok,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -27,10 +28,12 @@ const ContactDetails = ({ order }: ContactDetailsProps) => {
       w={!isTablet ? "100%" : "50%"}
       h={"100%"}
       minH={!isTablet ? "20vh" : "55vh"}
-      bg={"gray.700"}
+      bg={"gray.900"}
       borderTopRightRadius={"md"}
       borderBottomRightRadius={!isTablet ? "none" : "md"}
       borderTopLeftRadius={!isTablet ? "md" : "none"}
+      borderBottom={!isTablet ? "1px solid white" : "none"}
+      borderBottomColor={"gray.600"}
     >
       <a href={`mailto:${SocialLinks.GMAIL}`} target={"_blank"}>
         <Flex gap={2} alignItems={"center"}>
@@ -39,10 +42,21 @@ const ContactDetails = ({ order }: ContactDetailsProps) => {
             icon={faEnvelope}
             cursor={"pointer"}
           />
-          <Text fontSize={"xl"}>{"/mad.competitions"}</Text>
+          <Text fontSize={"xl"}>{SocialLinks.GMAIL}</Text>
         </Flex>
       </a>
-      <a href={SocialLinks.FACEBOOK} target={"_blank"}>
+      <a href={SocialLinks.TIKTOK} target={"_blank"}>
+        <Flex gap={2} alignItems={"center"}>
+          <FontAwesomeIcon
+            fontSize={ICONS_SIZE}
+            icon={faTiktok}
+            cursor={"pointer"}
+          />
+
+          <Text fontSize={"xl"}>{"@madcompetitionsuk"}</Text>
+        </Flex>
+      </a>
+      {/* <a href={SocialLinks.FACEBOOK} target={"_blank"}>
         <Flex gap={2} alignItems={"center"}>
           <FontAwesomeIcon
             fontSize={ICONS_SIZE}
@@ -51,8 +65,8 @@ const ContactDetails = ({ order }: ContactDetailsProps) => {
           />
           <Text fontSize={"xl"}>{"/mad.competitions"}</Text>
         </Flex>
-      </a>
-      <a href={SocialLinks.INSTAGRAM} target={"_blank"}>
+      </a> */}
+      {/* <a href={SocialLinks.INSTAGRAM} target={"_blank"}>
         <Flex gap={2} alignItems={"center"}>
           <FontAwesomeIcon
             fontSize={ICONS_SIZE}
@@ -61,18 +75,7 @@ const ContactDetails = ({ order }: ContactDetailsProps) => {
           />
           <Text fontSize={"xl"}>{"/mad.competitions"}</Text>
         </Flex>
-      </a>
-      <a href={SocialLinks.TWITTER} target={"_blank"}>
-        <Flex gap={2} alignItems={"center"}>
-          <FontAwesomeIcon
-            fontSize={ICONS_SIZE}
-            icon={faTwitter}
-            cursor={"pointer"}
-          />
-
-          <Text fontSize={"xl"}>{"/mad.competitions"}</Text>
-        </Flex>
-      </a>
+      </a> */}
     </Flex>
   );
 };

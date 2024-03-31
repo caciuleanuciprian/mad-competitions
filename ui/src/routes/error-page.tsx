@@ -4,24 +4,21 @@ import Page from "../components/ui/page";
 import { useNavigate } from "react-router-dom";
 import { PagesURL } from "./consts";
 import Logo from "../components/ui/logo";
-import Header from "../components/ui/header";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
   return (
     <Page>
-      <Header title="" />
-
       <Flex
         justifyContent={"center"}
         alignItems={"center"}
         flexDir={"column"}
         gap={4}
-        h={"53vh"}
+        h={"67vh"}
         color={"white"}
       >
         {/* @ts-ignore */}
-        <Logo width={"100%"} height={128} />
+        <Logo width={96} height={36} />{" "}
         <Text fontSize={"3xl"}>Page not found!</Text>
         <Button
           variant={"outline"}

@@ -11,7 +11,7 @@ const CardContainer = ({ children }: any) => {
       maxWidth={isDesktop ? "1500px" : isTablet ? "1200px" : "100%"}
       margin={"0 auto"}
       h={"100%"}
-      minH={"53.65vh"}
+      minH={"46.6vh"}
       justifyContent={"center"}
       alignItems={"center"}
       gap={8}

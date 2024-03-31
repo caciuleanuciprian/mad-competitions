@@ -10,14 +10,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS_SIZE } from "../../../lib/consts";
 
 const Payment = () => {
+  const PAYMENT_ICONS_SIZE = ICONS_SIZE / 1.25;
   return (
     <Flex justifyContent={"center"} alignItems={"center"} gap={4}>
       <Text fontSize={"lg"}>Payment</Text>
-      <FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCcVisa} />
-      <FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCcMastercard} />
-      <FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCcPaypal} />
-      <FontAwesomeIcon fontSize={ICONS_SIZE} icon={faCcApplePay} />
-      <FontAwesomeIcon fontSize={ICONS_SIZE} icon={faGooglePay} />
+      <FontAwesomeIcon fontSize={PAYMENT_ICONS_SIZE} icon={faCcVisa} />
+      <FontAwesomeIcon fontSize={PAYMENT_ICONS_SIZE} icon={faCcMastercard} />
+      <FontAwesomeIcon fontSize={PAYMENT_ICONS_SIZE} icon={faCcPaypal} />
+      <FontAwesomeIcon fontSize={PAYMENT_ICONS_SIZE} icon={faCcApplePay} />
+      <FontAwesomeIcon fontSize={PAYMENT_ICONS_SIZE} icon={faGooglePay} />
     </Flex>
   );
 };

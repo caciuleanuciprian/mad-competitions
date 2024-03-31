@@ -38,6 +38,8 @@ import ProgressBar from "./atoms/progress";
 import { Rules } from "./atoms/rules";
 import Timer from "./atoms/timer";
 import { GetCompetitionById } from "./core/competitions.service";
+import { MetaTags } from "../ui/meta-tags";
+import { PagesURL } from "../../routes/consts";
 
 const CompetitionDetails = () => {
   const cart = useContext(CartContext);
@@ -97,6 +99,13 @@ const CompetitionDetails = () => {
 
   return (
     <>
+      <MetaTags
+        title={data?.title}
+        primary_description="Check out our competition and join for a chance to win this big prize!"
+        secondary_description={data?.description}
+        image={data?.image}
+        url={`${PagesURL.COMPETITIONS}/${id}`}
+      />
       {error && <div>Error: {`${error}`}</div>}
       <Header title={data?.title} />
       {data ? (

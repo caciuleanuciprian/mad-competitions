@@ -15,15 +15,15 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const Navigation = () => {
   const [isActive, setIsActive] = useRecoilState(currentActivePageAtom);
   const navigate = useNavigate();
-  const [isTablet] = useMediaQuery("(min-width: 768px)", { ssr: false });
+  const [isTablet] = useMediaQuery("(min-width: 950px)", { ssr: false });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <NavContainer>
       <Flex alignItems={"center"} gap={6}>
         <Logo
-          width={24}
-          height={24}
+          width={!isTablet ? 36 : 72}
+          height={!isTablet ? 12 : 24}
           onClick={() => {
             navigate(Links[LinkIDS.HOME].to);
             setIsActive(LinkIDS.HOME);

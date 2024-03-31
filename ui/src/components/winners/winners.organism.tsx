@@ -4,12 +4,14 @@ import { isAdminAtom } from "../navigation/utils/navigation.recoil";
 import CardContainer from "../ui/card/cardContainer";
 import AddWinnerForm from "./molecules/addWinnerForm";
 import AddCard from "../ui/card/addCard";
-import { Spinner, useDisclosure, useToast } from "@chakra-ui/react";
+import { Flex, Spinner, useDisclosure, useToast } from "@chakra-ui/react";
 import useAxios from "../../lib/axios/useAxios";
 import { GetWinners } from "./core/winners.service";
 import { useEffect, useState } from "react";
 import { displayToast } from "../ui/toast";
 import { Pagination } from "../ui/pagination";
+import { PagesURL } from "../../routes/consts";
+import { MetaTags } from "../ui/meta-tags";
 
 const Winners = () => {
   const toast = useToast();
@@ -50,6 +52,12 @@ const Winners = () => {
 
   return (
     <>
+      <MetaTags
+        title="Winners"
+        primary_description="Mad Competitions Winners."
+        secondary_description="Check out our winners!"
+        url={PagesURL.WINNERS}
+      />
       <CardContainer>
         {isAdmin && (
           <AddCard
@@ -73,6 +81,16 @@ const Winners = () => {
               ticketNumber={card.ticketNumber}
             />
           ))
+        )}
+        {!isLoading && data?.length === 0 && (
+          <Flex color={"white"} opacity={0.25}>
+            No winners yet. Be our first winner!
+          </Flex>
+        )}
+        {error && (
+          <Flex color={"white"} opacity={0.25}>
+            Error loading winners.
+          </Flex>
         )}
       </CardContainer>
       <Pagination

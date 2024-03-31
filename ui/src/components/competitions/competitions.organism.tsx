@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { displayToast } from "../ui/toast";
 import { Pagination } from "../ui/pagination";
 import { Filters } from "../ui/filters";
+import { MetaTags } from "../ui/meta-tags";
 
 const Competitions = () => {
   const toast = useToast();
@@ -79,8 +80,20 @@ const Competitions = () => {
 
   return (
     <>
+      <MetaTags
+        title="Competitions"
+        primary_description="Check our carefully curated competitions and play to win!"
+        secondary_description="A list of competitions to join and win big prizes."
+        url={PagesURL.COMPETITIONS}
+      />
+
       <CardContainer>
-        <Filters setFilterBy={setFilterBy} marginRight={isTablet ? "8" : "0"} />
+        {error || isLoading ? null : (
+          <Filters
+            setFilterBy={setFilterBy}
+            marginRight={isTablet ? "8" : "0"}
+          />
+        )}
 
         {isAdmin && (
           <AddCard
@@ -112,7 +125,14 @@ const Competitions = () => {
           ))
         )}
         {!isLoading && data?.length === 0 && (
-          <Flex color={"white"}>No competitions found.</Flex>
+          <Flex color={"white"} opacity={0.25}>
+            No competitions found.
+          </Flex>
+        )}
+        {error && (
+          <Flex color={"white"} opacity={0.25}>
+            Error loading competitions.
+          </Flex>
         )}
       </CardContainer>
       <Pagination

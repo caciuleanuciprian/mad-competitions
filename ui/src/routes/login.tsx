@@ -78,11 +78,11 @@ const LoginPage = () => {
         margin={"0 auto"}
         color={"white"}
         my={8}
-        h={"52vh"}
+        h={"54vh"}
         alignItems={"center"}
         justifyContent={"space-evenly"}
       >
-        <Logo width={200} height={200} />
+        <Logo width={96} height={36} />{" "}
         <Formiz connect={loginForm}>
           <Flex flexDir={"column"} w={"100%"} gap={4}>
             <InputField

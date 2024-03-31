@@ -99,6 +99,34 @@ export const PastWinners = () => {
           </Splide>
         </Flex>
       )}
+      {!isLoading && data && data.winners.length === 0 && (
+        <Flex
+          w={"100%"}
+          h={"100%"}
+          minH={"53.65vh"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          color={"white"}
+          opacity={0.25}
+          textAlign={"center"}
+        >
+          No winners yet. Can you be the first?
+        </Flex>
+      )}
+      {error && (
+        <Flex
+          w={"100%"}
+          h={"100%"}
+          minH={"53.65vh"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          color={"white"}
+          opacity={0.25}
+          textAlign={"center"}
+        >
+          There was an error retrieving the winners. Please try again later.
+        </Flex>
+      )}
     </Flex>
   );
 };

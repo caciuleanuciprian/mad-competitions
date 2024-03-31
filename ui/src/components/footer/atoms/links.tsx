@@ -4,6 +4,7 @@ import Logo from "../../ui/logo";
 import { useRecoilState } from "recoil";
 import { Links, LinkIDS } from "../../navigation/utils/consts";
 import { currentActivePageAtom } from "../../navigation/utils/navigation.recoil";
+import { PagesURL } from "../../../routes/consts";
 
 interface FooterLinksProps {
   isTablet: boolean;
@@ -28,15 +29,13 @@ const FooterLinks = ({ isTablet }: FooterLinksProps) => {
         h={"100%"}
         justifyContent={"space-evenly"}
       >
-        <Link to={"/tos"}>Terms & Conditions</Link>
-        <Link to={"/privacy"}>Privacy Policy</Link>
-        <Link to={"/faqs"}>FAQs</Link>
+        <Link to={PagesURL.TOS}>Terms & Conditions</Link>
+        <Link to={PagesURL.PRIVACY}>Privacy Policy</Link>
+        <Link to={PagesURL.TOU}>Terms of Use</Link>
 
         <Link to={"/contact"}>Contact Us</Link>
       </Flex>
       <Flex
-        width={28}
-        height={28}
         cursor={"pointer"}
         order={isTablet ? 1 : 2}
         onClick={() => {
@@ -44,7 +43,7 @@ const FooterLinks = ({ isTablet }: FooterLinksProps) => {
           setIsActive(LinkIDS.HOME);
         }}
       >
-        <Logo />
+        <Logo width={72} height={24} />
       </Flex>
     </Flex>
   );

@@ -43,6 +43,7 @@ const TextareaForm = <FormattedValue = string,>(
         resize={"none"}
         placeholder={placeholder}
         isDisabled={isReadonly}
+        _focusVisible={{ borderColor: isValid ? "green.400" : "red.500" }}
       />
       {!isValid && (
         <Text fontSize={"xs"} color={"red.500"}>

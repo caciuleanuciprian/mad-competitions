@@ -3,6 +3,7 @@ import Navigation from "../navigation/navigation.organism";
 import { useRecoilState } from "recoil";
 import { isAdminAtom } from "../navigation/utils/navigation.recoil";
 import { AdminGuard } from "../../guards/admin-guard";
+import { CookieBanner } from "./cookie-banner";
 
 const Page = ({ children }: any) => {
   const [isAdmin] = useRecoilState(isAdminAtom);
@@ -39,6 +40,7 @@ const Page = ({ children }: any) => {
         <Flex width={"100%"} minH={"90vh"} flexDir={"column"} bg={"black"}>
           {children}
         </Flex>
+        <CookieBanner />
       </AdminGuard>
     </>
   );

@@ -26,3 +26,9 @@ export const shouldRefetchWinnerAtom = atom({
   key: "shouldRefetchWinner",
   default: false,
 });
+
+export const isCookiesAcceptedAtom = atom({
+  key: "isCookiesAccepted",
+  default: false,
+  effects: [localStorageEffect("cookiesAccepted")],
+});
