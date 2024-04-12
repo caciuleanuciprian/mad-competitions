@@ -22,8 +22,8 @@ const Navigation = () => {
     <NavContainer>
       <Flex alignItems={"center"} gap={6}>
         <Logo
-          width={!isTablet ? 36 : 72}
-          height={!isTablet ? 12 : 24}
+          width={!isTablet ? 36 : 56}
+          height={!isTablet ? 12 : 16}
           onClick={() => {
             navigate(Links[LinkIDS.HOME].to);
             setIsActive(LinkIDS.HOME);
